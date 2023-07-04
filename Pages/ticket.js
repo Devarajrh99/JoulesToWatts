@@ -29,11 +29,11 @@ const MyPage = () => {
     setSelectedItem(item);
   };
 
-  // const items = [
-  //   { label: 'High', value: 'High' },
-  //   { label: 'Medium', value: 'Medium' },
-  //   { label: 'Low', value: 'Low' }
-  // ];
+  const items = [
+    { label: 'High', value: 'High' },
+    { label: 'Medium', value: 'Medium' },
+    { label: 'Low', value: 'Low' }
+  ];
 
   const handleButton1Press = () => {
     setFlashVisible(true);
@@ -58,11 +58,12 @@ const MyPage = () => {
   // }, [flashVisible]);
 
   return (
-    <ScrollView>
+    
       <View style={styles.container}>
+        <ScrollView>
         <Header/>
         <ImageBackground
-          source={require('./Images/banner.jpeg')}
+          source={require('./Images/background.png')}
           style={styles.backgroundImage}
         >
           <Text style={styles.texthead05}>
@@ -116,16 +117,18 @@ const MyPage = () => {
             <Text style={styles.buttonText}>Cancel</Text>
           </TouchableOpacity>
         </View>
-      </View>
-
-      <Footer/>
+        <Footer/>
 
       {flashVisible && (
         <View style={styles.flashMessage}>
           <Text style={styles.flashText}>Ticket created successfully</Text>
         </View>
       )}
-    </ScrollView>
+      </ScrollView>
+      </View>
+
+      
+    
   );
 };
 

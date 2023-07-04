@@ -1,149 +1,110 @@
-import React, { useState } from 'react';
-import { View, Button, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import Modal from 'react-native-modal';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import moment from 'moment';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Modal, TouchableWithoutFeedback, Animated } from 'react-native';
 
-const YourComponent = () => {
-  const [isFromTimePickerVisible, setIsFromTimePickerVisible] = useState(false);
-  const [isToTimePickerVisible, setIsToTimePickerVisible] = useState(false);
-  const [selectedFromTime, setSelectedFromTime] = useState('');
-  const [selectedToTime, setSelectedToTime] = useState('');
 
-  const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
-  const [selectedDate, setSelectedDate] = useState('');
+const SideMenu = ({ interviewpanel, home, sparsh }) => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const animatedValue = new Animated.Value(0);
+  
+    const toggleMenu = () => {
+      setIsMenuOpen(!isMenuOpen);
+    };
+  
+    useEffect(() => {
+      Animated.timing(animatedValue, {
+        toValue: isMenuOpen ? 1 : 0,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    }, [isMenuOpen]);
+  
+    const opacity = animatedValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, 0.5],
+    });
+  
+    const menuTranslateX = animatedValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: [-300, 0],
+    });
+  
+    return (
+      <View style={styles.container}>
+        <TouchableOpacity onPress={toggleMenu} style={styles.menuButton}>
+          <Text style = {styles.text}>Menu</Text>
+          {/* <FontAwesomeIcon icon={faBars} style={styles.icon} /> */}
+        </TouchableOpacity>
+  
+        <Modal visible={isMenuOpen} transparent animationType="fade">
+          <TouchableWithoutFeedback onPress={toggleMenu}>
+            <Animated.View style={[styles.overlay, { opacity }]} />
+          </TouchableWithoutFeedback>
+  
+          <Animated.View style={[styles.sideMenu, { transform: [{ translateX: menuTranslateX }] }]}>
+            <TouchableOpacity onPress={toggleMenu} style={styles.closeButton}>
+              <Text style = {styles.text}>Close Menu</Text>
+            </TouchableOpacity>
 
-  const showFromTimePicker = () => {
-    setIsFromTimePickerVisible(true);
+            <Text style = {styles.sidetext}>Home</Text>  
+            <TouchableOpacity onPress={home}>
+            <Text style = {styles.sidetext}>Job Portal</Text>
+              </TouchableOpacity>
+            <TouchableOpacity onPress={interviewpanel}>
+            <Text style = {styles.sidetext}>Interview Panel</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={sparsh}>
+            <Text style = {styles.sidetext}>Sparsh</Text>
+            </TouchableOpacity>
+            {/* Add more menu items as needed */}
+          </Animated.View>
+        </Modal>
+  
+        {/* Rest of the content of your Home Screen */}
+      </View>
+    );
   };
-
-  const hideFromTimePicker = () => {
-    setIsFromTimePickerVisible(false);
-  };
-
-  const showToTimePicker = () => {
-    setIsToTimePickerVisible(true);
-  };
-
-  const hideToTimePicker = () => {
-    setIsToTimePickerVisible(false);
-  };
-
-  const handleFromTimeConfirm = (date) => {
-    setSelectedFromTime(moment(date).format('HH:mm'));
-    hideFromTimePicker();
-  };
-
-  const handleToTimeConfirm = (date) => {
-    const selectedTime = moment(date);
-    const fromTime = moment(selectedFromTime, 'HH:mm');
-    if (selectedTime.isAfter(fromTime)) {
-      setSelectedToTime(selectedTime.format('HH:mm'));
-    } else {
-        Alert.alert("To time must be after the from time");
-      // Show an error or display a message indicating that the "to" time must not be earlier than the "from" time
+  
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    menuButton: {
+    //   paddingHorizontal: 16,
+      paddingVertical: 8,
+      backgroundColor: 'white',
+    },
+    overlay: {
+      flex: 1,
+      backgroundColor: '#000000',
+    },
+    sideMenu: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '60%',
+      height: '100%',
+      backgroundColor: '#ffffff',
+      padding: 16,
+      borderRadius : 5,
+    },
+    closeButton: {
+      marginBottom: 16,
+      padding: 8,
+      backgroundColor: 'white',
+    },
+    text : {
+        color : 'black',
+        alignContent : 'center',
+    },
+    sidetext : {
+      color : 'black',
+      alignContent : 'center',
+      marginBottom : 20,
+      marginLeft : '8%',
     }
-    hideToTimePicker();
-  };
-
-  const showDatePicker = () => {
-    setIsDatePickerVisible(true);
-  };
-
-  const hideDatePicker = () => {
-    setIsDatePickerVisible(false);
-  };
-
-  const handleDateConfirm = (date) => {
-    setSelectedDate(moment(date).format('YYYY-MM-DD'));
-    hideDatePicker();
-  };
-
-  return (
-    <View style={styles.container}>
-
-<TouchableOpacity style={styles.button} onPress={showDatePicker}>
-        <Text style={styles.buttonText}>Select Date</Text>
-      </TouchableOpacity>
-
-      {selectedDate !== '' && (
-        <Text style={styles.text}>Selected Date: {selectedDate}</Text>
-      )}
-
-      <TouchableOpacity style={styles.button} onPress={showFromTimePicker}>
-        <Text style={styles.buttonText}>Select From Time</Text>
-      </TouchableOpacity>
-
-      {selectedFromTime !== '' && (
-        <Text style={styles.text}>Selected From Time: {selectedFromTime}</Text>
-      )}
-
-      <TouchableOpacity style={styles.button} onPress={showToTimePicker}>
-        <Text style={styles.buttonText}>Select To Time</Text>
-      </TouchableOpacity>
-
-      {selectedToTime !== '' && (
-        <Text style={styles.text}>Selected To Time: {selectedToTime}</Text>
-      )}
-
-<Modal isVisible={isDatePickerVisible} onBackdropPress={hideDatePicker}>
-        <View style={styles.modalContainer}>
-          <DateTimePickerModal
-            isVisible={isDatePickerVisible}
-            mode="date"
-            onConfirm={handleDateConfirm}
-            onCancel={hideDatePicker}
-          />
-        </View>
-      </Modal>
-
-      <Modal isVisible={isFromTimePickerVisible} onBackdropPress={hideFromTimePicker}>
-        <View style={styles.modalContainer}>
-          <DateTimePickerModal
-            isVisible={isFromTimePickerVisible}
-            mode="time"
-            onConfirm={handleFromTimeConfirm}
-            onCancel={hideFromTimePicker}
-          />
-        </View>
-      </Modal>
-
-      <Modal isVisible={isToTimePickerVisible} onBackdropPress={hideToTimePicker}>
-        <View style={styles.modalContainer}>
-          <DateTimePickerModal
-            isVisible={isToTimePickerVisible}
-            mode="time"
-            onConfirm={handleToTimeConfirm}
-            onCancel={hideToTimePicker}
-          />
-        </View>
-      </Modal>
-    </View>
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  button: {
-    backgroundColor: 'blue',
-    padding: 10,
-    borderRadius: 5,
-    marginVertical: 10,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-  },
-  modalContainer: {
-    backgroundColor : 'gray',
-  },
-  text : {
-    color : 'black',
-  },
-}
-)
-export default YourComponent;
+  });
+  
+  export default SideMenu;
+  
