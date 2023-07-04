@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Modal, TouchableWithoutFeedback, Animated } from 'react-native';
 
 
-const SideMenu = ({ interviewpanel, home }) => {
+const SideMenu = ({ interviewpanel, home, sparsh }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const animatedValue = new Animated.Value(0);
   
@@ -52,7 +52,9 @@ const SideMenu = ({ interviewpanel, home }) => {
             <TouchableOpacity onPress={interviewpanel}>
             <Text style = {styles.sidetext}>Interview Panel</Text>
             </TouchableOpacity>
+            <TouchableOpacity onPress={sparsh}>
             <Text style = {styles.sidetext}>Sparsh</Text>
+            </TouchableOpacity>
             {/* Add more menu items as needed */}
           </Animated.View>
         </Modal>
