@@ -1,93 +1,126 @@
 import React, { useState } from 'react';
-import { View, Button, Text, TouchableOpacity, StyleSheet, Modal, Dimensions } from 'react-native';
+import { View, Button, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import Modal from 'react-native-modal';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 
 const YourComponent = () => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isFromTimePickerVisible, setIsFromTimePickerVisible] = useState(false);
+  const [isToTimePickerVisible, setIsToTimePickerVisible] = useState(false);
   const [selectedFromTime, setSelectedFromTime] = useState('');
   const [selectedToTime, setSelectedToTime] = useState('');
 
+  const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
+  const [selectedDate, setSelectedDate] = useState('');
+
   const showFromTimePicker = () => {
-    setIsModalVisible(true);
-    setSelectedFromTime('');
+    setIsFromTimePickerVisible(true);
+  };
+
+  const hideFromTimePicker = () => {
+    setIsFromTimePickerVisible(false);
   };
 
   const showToTimePicker = () => {
-    setIsModalVisible(true);
-    setSelectedToTime('');
+    setIsToTimePickerVisible(true);
   };
 
-  const hideTimePicker = () => {
-    setIsModalVisible(false);
+  const hideToTimePicker = () => {
+    setIsToTimePickerVisible(false);
   };
 
   const handleFromTimeConfirm = (date) => {
-    const selectedTime = moment(date).format('HH:mm');
-    setSelectedFromTime(selectedTime);
-    setIsModalVisible(false);
+    setSelectedFromTime(moment(date).format('HH:mm'));
+    hideFromTimePicker();
   };
 
   const handleToTimeConfirm = (date) => {
-    const selectedTime = moment(date).format('HH:mm');
-    setSelectedToTime(selectedTime);
-    setIsModalVisible(false);
+    const selectedTime = moment(date);
+    const fromTime = moment(selectedFromTime, 'HH:mm');
+    if (selectedTime.isAfter(fromTime)) {
+      setSelectedToTime(selectedTime.format('HH:mm'));
+    } else {
+        Alert.alert("To time must be after the from time");
+      // Show an error or display a message indicating that the "to" time must not be earlier than the "from" time
+    }
+    hideToTimePicker();
+  };
+
+  const showDatePicker = () => {
+    setIsDatePickerVisible(true);
+  };
+
+  const hideDatePicker = () => {
+    setIsDatePickerVisible(false);
+  };
+
+  const handleDateConfirm = (date) => {
+    setSelectedDate(moment(date).format('YYYY-MM-DD'));
+    hideDatePicker();
   };
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.button} onPress={showFromTimePicker}>
-        <Text style={styles.buttonText}>Select From Time</Text>
+
+<TouchableOpacity style={styles.button} onPress={showDatePicker}>
+        <Text style={styles.buttonText}>Select Date</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button} onPress={showToTimePicker}>
-        <Text style={styles.buttonText}>Select To Time</Text>
+      {selectedDate !== '' && (
+        <Text style={styles.text}>Selected Date: {selectedDate}</Text>
+      )}
+
+      <TouchableOpacity style={styles.button} onPress={showFromTimePicker}>
+        <Text style={styles.buttonText}>Select From Time</Text>
       </TouchableOpacity>
 
       {selectedFromTime !== '' && (
         <Text style={styles.text}>Selected From Time: {selectedFromTime}</Text>
       )}
 
+      <TouchableOpacity style={styles.button} onPress={showToTimePicker}>
+        <Text style={styles.buttonText}>Select To Time</Text>
+      </TouchableOpacity>
+
       {selectedToTime !== '' && (
         <Text style={styles.text}>Selected To Time: {selectedToTime}</Text>
       )}
 
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={isModalVisible}
-        onRequestClose={hideTimePicker}
-      >
+<Modal isVisible={isDatePickerVisible} onBackdropPress={hideDatePicker}>
         <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            {selectedFromTime === '' && (
-              <DateTimePickerModal
-                isVisible={true}
-                mode="time"
-                onConfirm={handleFromTimeConfirm}
-                onCancel={hideTimePicker}
-                headerTextIOS="Select From Time"
-              />
-            )}
+          <DateTimePickerModal
+            isVisible={isDatePickerVisible}
+            mode="date"
+            onConfirm={handleDateConfirm}
+            onCancel={hideDatePicker}
+          />
+        </View>
+      </Modal>
 
-            {selectedToTime === '' && (
-              <DateTimePickerModal
-                isVisible={true}
-                mode="time"
-                onConfirm={handleToTimeConfirm}
-                onCancel={hideTimePicker}
-                headerTextIOS="Select To Time"
-              />
-            )}
-          </View>
+      <Modal isVisible={isFromTimePickerVisible} onBackdropPress={hideFromTimePicker}>
+        <View style={styles.modalContainer}>
+          <DateTimePickerModal
+            isVisible={isFromTimePickerVisible}
+            mode="time"
+            onConfirm={handleFromTimeConfirm}
+            onCancel={hideFromTimePicker}
+          />
+        </View>
+      </Modal>
+
+      <Modal isVisible={isToTimePickerVisible} onBackdropPress={hideToTimePicker}>
+        <View style={styles.modalContainer}>
+          <DateTimePickerModal
+            isVisible={isToTimePickerVisible}
+            mode="time"
+            onConfirm={handleToTimeConfirm}
+            onCancel={hideToTimePicker}
+          />
         </View>
       </Modal>
     </View>
   );
 };
-
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   container: {
@@ -106,21 +139,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalContent: {
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 10,
-    width: windowWidth * 0.5,
-    height: windowHeight * 0.5,
+    backgroundColor : 'gray',
   },
   text : {
-    color: 'black'
-  }
-});
-
+    color : 'black',
+  },
+}
+)
 export default YourComponent;
