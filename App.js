@@ -6,7 +6,6 @@ import LoginScreen from './Pages/LoginScreen';
 import OtpScreen from './Pages/OtpScreen';
 import Job_PortalScreen from './Pages/Job_PortalScreen';
 import DropdownMenu from './Pages/Dropdown';
-import MultipleDropdown from './Pages/MultipleDropdown';
 import MyReferrals from './Pages/My_referrals';
 import InteractiveDeveloper from './Pages/InteractiveDevelop';
 import InterviewPanel from './Pages/InterviewPanel';
@@ -26,7 +25,6 @@ const App = () => {
         <Stack.Screen name='Otp' component={OtpScreen} options={{ headerShown : false }} />
         <Stack.Screen name='Job_Portal' component={Job_PortalScreen} options={{ headerShown : false }} />
         <Stack.Screen name='Dropdown' component={DropdownMenu} />
-        <Stack.Screen name="MultipleDropdown" component={MultipleDropdown} />
         <Stack.Screen name='myreferral' component={MyReferrals} options={{ headerShown : false }} />
         <Stack.Screen name='interactivedeveloper' component={InteractiveDeveloper} options={{ headerShown : false }} />
         <Stack.Screen name='InterviewPanel' component={InterviewPanel} options={{ headerShown : false }} />
