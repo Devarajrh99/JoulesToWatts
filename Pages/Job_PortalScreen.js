@@ -24,12 +24,16 @@ const Job_portal = ({ navigation }) => {
         navigation.navigate('Job_Portal')
     }
 
+    const sparsh = () => {
+        navigation.navigate('Sparsh')
+    }
+
     return (
     <View style={styles.container}>
         <ScrollView>
             <View>
                 <View style={{flexDirection : 'row', width : '80%'}}>
-                <MenuBar interviewpanel={interviewpanel} home={home} />
+                <MenuBar interviewpanel={interviewpanel} home={home} sparsh={sparsh} />
                 <Header logout={logout} />
                 </View>
             <ImageBackground style = {styles.background} source = {require('./Images/background.png')}>

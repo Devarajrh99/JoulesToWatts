@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { StyleSheet, TextInput, Button, Text, TouchableOpacity, View, Alert, ScrollView } from 'react-native';
+import { StyleSheet, TextInput, Text, TouchableOpacity, View, Alert, ScrollView } from 'react-native';
 
 
 const OtpScreen = ({ navigation }) => {
@@ -37,7 +37,6 @@ const OtpScreen = ({ navigation }) => {
     return (
         <View style={styles.container}>
           <ScrollView>
-                          {/* <Filter /> */}
                 <TextInput style={styles.input} onChangeText={handleOTPChange} value={otp} keyboardType="numeric" 
                     maxLength={4} placeholder="Enter your OTP" placeholderTextColor={'gray'} />
                 <View style={{ flexDirection : 'row', justifyContent : 'center', width : '80%'}} >
