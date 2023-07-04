@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, ImageBackground, Modal, Pressable,  useWindowDimensions , Picker, SafeAreaView, TouchableHighlight, Text, View, TextInput, Image, TouchableOpacity, ScrollView } from 'react-native';
-// import AntDesign from '@expo/vector-icons/AntDesign';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { RadioButton } from 'react-native-paper';
+// import { RadioButton } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMugSaucer } from '@fortawesome/free-solid-svg-icons/faMugSaucer'
@@ -14,36 +13,24 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { FaSearch } from 'react-icons/fa';
 import { IonItem, IonList, IonSelect, IonSelectOption } from '@ionic/react';
 import DateTimePicker from '@react-native-community/datetimepicker';
-// import DateTimePicker from 'react-datetime-picker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-// import { View, useWindowDimensions } from 'react-native';
 import { TabView, SceneMap } from 'react-native-tab-view';
 import { TouchableWithoutFeedback} from 'react-native'
-// import {  Modal, Alert } from 'react-native';
-// import Icon from 'react-native-vector-icons/FontAwesome';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import Header from './Header';
 import Footer from './Footer';
-// import Drawer from './Drawer';
 import SideMenu from './SideMenu';
-// import ticket from './ticket';
-// const data = [
-//   { label: 'Apples', value: 'apples' },
-//   { label: 'Oranges', value: 'oranges' },
-//   { label: 'Bananas', value: 'bananas' }
-// ];
 
 const Sparsh = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [priority, setPriority] = useState('');
-  // const navigation = useNavigation();
 
 
   const [selected, setSelected] = React.useState([]);
   
   const data = [
-      // {key:'1', value:'Mobiles', disabled:true},
       {key:'1', value:'name1'},
       {key:'2', value:'name2'},
       {key:'3', value:'name3'},
@@ -71,8 +58,6 @@ const Sparsh = ({ navigation }) => {
     setSelected(values);
   };
 
-
-
   const FirstRoute = () => (
     <View style={{flexDirection : 'row', width : 70}}  />
     
@@ -95,9 +80,6 @@ const Sparsh = ({ navigation }) => {
     { key: 'second', title: 'Closed Ticket' },
   ]);
 
-
-
-
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -106,17 +88,11 @@ const Sparsh = ({ navigation }) => {
         <Header />
         </View>
         <ImageBackground
-          source={require('./Images/banner.jpeg')}
+          source={require('./Images/background.png')}
           style={styles.backgroundImage}
         >
-          {/* <NavigationContainer>
-      <Drawer.Navigator>
-        <Drawer.Screen name="OTP" component={Drawer} />
-      </Drawer.Navigator>
-    </NavigationContainer> */}
           <Text style={styles.texthead02}>Sparsh</Text>
           <Text style={styles.texthead05}>
-          {/* <Icon name="rocket" size={30} color="#900" /> */}
             Say Hello to Hassle-Free HR Query Resolution with sparsh : Your On-Stop Tcking Raising Platform
           </Text>
         </ImageBackground>
@@ -125,7 +101,7 @@ const Sparsh = ({ navigation }) => {
     </TouchableOpacity>
                   
               
-                  <TabView
+  <TabView
   navigationState={{ index, routes }}
   onIndexChange={setIndex}
   renderScene={SceneMap({
@@ -146,7 +122,7 @@ const Sparsh = ({ navigation }) => {
   }}>
                 <View style={styles.centeredView}>
                   <View style={styles.modalView} >
-                  <RadioButton.Group onValueChange={value => setPriority(value)} value={priority}>
+                  {/* <RadioButton.Group onValueChange={value => setPriority(value)} value={priority}>
                   <View style={styles.radioItem}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                       <RadioButton color="red" value="high" />
@@ -165,7 +141,7 @@ const Sparsh = ({ navigation }) => {
                       <Text style={[styles.modalText, { color: '#3590ae' }]}>Low Priority</Text>
                     </View>
                   </View>
-                </RadioButton.Group>
+                </RadioButton.Group> */}
 
                     <Pressable
                       style={[styles.button, styles.buttonClose]}
@@ -363,16 +339,14 @@ modalView: {
     borderRadius: 20,
     padding: 35,
     shadowColor: '#000',
-    shadowOffset: {
+},
+  shadowOffset: {
       width: 0,
       height: 2,
-    },
-    shadowOpacity: 0.25,
+  shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-    marginVertical:260,
-    // alignItems:10,
-    
+    marginVertical:260,    
   },
   button: {
     marginBottom : 10,
@@ -383,7 +357,6 @@ modalView: {
   buttonOpen: {
     backgroundColor: '#d3d3d3',
     borderRadius : 20,
-    // width: 170,
     height:54.9,
     flexDirection: 'row',
     marginHorizontal: 10,
@@ -397,10 +370,7 @@ modalView: {
   textStyle: {
     color: 'black',
     fontWeight: 'bold',
-    // fontSize:0,
-    // padding : 20,
     paddingHorizontal:10,
-    
   },
   modalText: {
     marginBottom: 15,
@@ -419,16 +389,13 @@ modalView: {
     marginTop: 10,
   },
   button3: {
-    // marginTop: 20,
     paddingVertical: 10,
     paddingHorizontal: 20,
     backgroundColor: '#d3d3d3',
     borderRadius: 12.5,
-    // width: 250,
     marginHorizontal:10,
     flexDirection: 'row',
     height:54.9,
-    // textAlign: 'center',
     alignItems: 'center'
   },
   buttonText3: {
@@ -437,8 +404,6 @@ modalView: {
     fontWeight: '30',
     textAlign: 'center',
   },
-  
-
 });
 
 export default Sparsh;
