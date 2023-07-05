@@ -85,50 +85,6 @@ const Filter = () => {
       <Modal visible={isModalVisible} transparent animationType="fade">
         <View style={styles.modalBackdrop}>
           <View style={styles.modalContent}>
-            {/* <View style={{ flexDirection : 'row', justifyContent : 'space-between', width : '100%' }}>
-              <Text style={styles.texthead01}>FilterBy</Text>
-              <TouchableOpacity onPress={resetFilter}>
-                <Text style={styles.reset}>Reset</Text>
-              </TouchableOpacity>
-            </View>
-            <Text style={styles.texthead}>Experience</Text>
-            <Picker
-              selectedValue={selectedExperience}
-              style={styles.picker}
-              onValueChange={(itemValue) => setSelectedExperience(itemValue)}
-            >
-              <Picker.Item label="Select experience" value="" />
-              <Picker.Item label="1-2 years" value="1-2 years" />
-              <Picker.Item label="3-5 years" value="3-5 years" />
-              <Picker.Item label="6-10 years" value="6-10 years" />
-            </Picker>
-
-            <Text style={styles.texthead}>Salary</Text>
-            <Picker
-              selectedValue={selectedSalary}
-              style={styles.picker}
-              onValueChange={(itemValue) => setSelectedSalary(itemValue)}
-            >
-              <Picker.Item label="Select salary" value="" />
-              <Picker.Item label="< $5000" value="< $5000" />
-              <Picker.Item label="$5000 - $10000" value="$5000 - $10000" />
-              <Picker.Item label="> $10000" value="> $10000" />
-            </Picker>
-
-            <Text style={styles.texthead}>Location</Text>
-            <TextInput
-              style={styles.textinput}
-              placeholder="Enter location"
-              placeholderTextColor='gray'
-              value={location}
-              onChangeText={setLocation}
-            />
-
-            <TouchableOpacity style={styles.filterbutton} onPress={handleApplyFilter}>
-              <Text style={styles.text}>Apply Filter</Text>
-            </TouchableOpacity> */}
-
-{/* <Button title="Select Date" onPress={showDatePicker} /> */}
 <TouchableOpacity style={styles.datebutton} onPress={showDatePicker}><Text style={styles.text}>Choose Date</Text></TouchableOpacity>
 {selectedDate && <Text style={styles.datetext}>Selected Date: {moment(selectedDate).format('YYYY-MM-DD')}</Text>}
       <DateTimePickerModal
@@ -166,7 +122,7 @@ const Filter = () => {
       </View>
 
             <TouchableOpacity style={styles.filterbutton} onPress={handleApplyFilter}>
-              <Text style={styles.text}>Apply Filter</Text>
+              <Text style={styles.text}>Schedule Appointment</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -179,16 +135,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    // alignItems: 'center',
   },
   filterButton: {
-    backgroundColor: '#5F9EA0',
-    padding: 10,
+    backgroundColor: 'green',
+    // padding: 10,
     borderRadius: 5,
+    marginLeft : '10%'
   },
   filterButtonText: {
-    color: '#fff',
-    // fontSize: 16,
+    color: 'white',
   },
   datebutton : {
     backgroundColor : '#5F9EA0',
@@ -201,13 +157,15 @@ const styles = StyleSheet.create({
     backgroundColor : '#5F9EA0',
     width : '80%',
     alignSelf : 'center',
-    borderRadius : 5
+    borderRadius : 5,
+    marginTop : '10%',
   },
   tobutton : {
     backgroundColor : '#5F9EA0',
     width : '80%',
     alignSelf : 'center',
-    borderRadius : 5
+    borderRadius : 5,
+    marginTop : '10%',
   },
   modalBackdrop: {
     flex: 1,
@@ -242,13 +200,11 @@ const styles = StyleSheet.create({
   datetext : {
     color : 'black',
     marginLeft : '10%',
-    marginBottom : '10%',
   },
   timetext : {
     color : 'black',
     marginLeft : '10%',
     alignSelf : 'center',
-    marginBottom : '10%'
   },
   textinput : {
     borderWidth : 1,

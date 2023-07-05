@@ -1,123 +1,131 @@
 import React, { useState } from 'react';
-import { View, Button, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import Modal from 'react-native-modal';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import moment from 'moment';
 
 const YourComponent = () => {
-  const [isFromTimePickerVisible, setIsFromTimePickerVisible] = useState(false);
-  const [isToTimePickerVisible, setIsToTimePickerVisible] = useState(false);
-  const [selectedFromTime, setSelectedFromTime] = useState('');
-  const [selectedToTime, setSelectedToTime] = useState('');
+  const [isDatePickerVisible, setDatePickerVisible] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [manualDate, setManualDate] = useState('');
 
-  const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
-  const [selectedDate, setSelectedDate] = useState('');
+  const [isTimePickerVisible, setTimePickerVisible] = useState(false);
+  const [selectedTime, setSelectedTime] = useState(null);
+  const [manualTime, setManualTime] = useState('');
 
-  const showFromTimePicker = () => {
-    setIsFromTimePickerVisible(true);
+  const showTimePicker = () => {
+    setTimePickerVisible(true);
   };
 
-  const hideFromTimePicker = () => {
-    setIsFromTimePickerVisible(false);
+  const hideTimePicker = () => {
+    setTimePickerVisible(false);
   };
 
-  const showToTimePicker = () => {
-    setIsToTimePickerVisible(true);
+  const handleTimeConfirm = (time) => {
+    setSelectedTime(time);
+    setManualTime(time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+    hideTimePicker();
   };
 
-  const hideToTimePicker = () => {
-    setIsToTimePickerVisible(false);
-  };
+  const handleManualTimeInput = () => {
+    const timeParts = manualTime.split(':');
+    const hours = parseInt(timeParts[0]);
+    const minutes = parseInt(timeParts[1]);
 
-  const handleFromTimeConfirm = (date) => {
-    setSelectedFromTime(moment(date).format('HH:mm'));
-    hideFromTimePicker();
-  };
+    const time = new Date();
+    time.setHours(hours);
+    time.setMinutes(minutes);
 
-  const handleToTimeConfirm = (date) => {
-    const selectedTime = moment(date);
-    const fromTime = moment(selectedFromTime, 'HH:mm');
-    if (selectedTime.isAfter(fromTime)) {
-      setSelectedToTime(selectedTime.format('HH:mm'));
-    } else {
-        Alert.alert("To time must be after the from time");
-      // Show an error or display a message indicating that the "to" time must not be earlier than the "from" time
+    if (!isNaN(time.getTime())) {
+      setSelectedTime(time);
     }
-    hideToTimePicker();
   };
+
 
   const showDatePicker = () => {
-    setIsDatePickerVisible(true);
+    setDatePickerVisible(true);
   };
 
   const hideDatePicker = () => {
-    setIsDatePickerVisible(false);
+    setDatePickerVisible(false);
   };
 
   const handleDateConfirm = (date) => {
-    setSelectedDate(moment(date).format('YYYY-MM-DD'));
+    setSelectedDate(date);
+    setManualDate(date.toISOString().split('T')[0]);
     hideDatePicker();
+  };
+
+  const handleManualDateInput = () => {
+    const dateParts = manualDate.split('-');
+    const year = parseInt(dateParts[0]);
+    const month = parseInt(dateParts[1]) - 1;
+    const day = parseInt(dateParts[2]);
+
+    const date = new Date(year, month, day);
+
+    if (!isNaN(date.getTime())) {
+      setSelectedDate(date);
+    }
   };
 
   return (
     <View style={styles.container}>
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.manualInput}
+          placeholder="Enter date manually (YYYY-MM-DD)"
+          placeholderTextColor={'gray'}
+          value={manualDate}
+          onChangeText={setManualDate}
+          onBlur={handleManualDateInput}
+        />
 
-<TouchableOpacity style={styles.button} onPress={showDatePicker}>
-        <Text style={styles.buttonText}>Select Date</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.pickButton} onPress={showDatePicker}>
+          <Text style={styles.pickButtonText}>Pick</Text>
+        </TouchableOpacity>
 
-      {selectedDate !== '' && (
-        <Text style={styles.text}>Selected Date: {selectedDate}</Text>
-      )}
+          <TextInput
+          style={styles.manualInput}
+          placeholder="Enter time manually (HH:MM)"
+          placeholderTextColor={'black'}
+          value={manualTime}
+          onChangeText={setManualTime}
+          onBlur={handleManualTimeInput}
+        />
 
-      <TouchableOpacity style={styles.button} onPress={showFromTimePicker}>
-        <Text style={styles.buttonText}>Select From Time</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.pickButton} onPress={showTimePicker}>
+          <Text style={styles.pickButtonText}>Pick</Text>
+        </TouchableOpacity>
+      </View>
 
-      {selectedFromTime !== '' && (
-        <Text style={styles.text}>Selected From Time: {selectedFromTime}</Text>
-      )}
+      <DateTimePickerModal
+        isVisible={isDatePickerVisible}
+        mode="date"
+        onConfirm={handleDateConfirm}
+        onCancel={hideDatePicker}
+      />
 
-      <TouchableOpacity style={styles.button} onPress={showToTimePicker}>
-        <Text style={styles.buttonText}>Select To Time</Text>
-      </TouchableOpacity>
+      {/* {selectedDate && (
+        <Text style={styles.selectedDateText}>
+          Selected Date: {selectedDate.toISOString().split('T')[0]}
+        </Text>
+      )} */}
 
-      {selectedToTime !== '' && (
-        <Text style={styles.text}>Selected To Time: {selectedToTime}</Text>
-      )}
+      
+       <DateTimePickerModal
+        isVisible={isTimePickerVisible}
+        mode="time"
+        onConfirm={handleTimeConfirm}
+        onCancel={hideTimePicker}
+      />
 
-<Modal isVisible={isDatePickerVisible} onBackdropPress={hideDatePicker}>
-        <View style={styles.modalContainer}>
-          <DateTimePickerModal
-            isVisible={isDatePickerVisible}
-            mode="date"
-            onConfirm={handleDateConfirm}
-            onCancel={hideDatePicker}
-          />
-        </View>
-      </Modal>
+      {/* {selectedTime && (
+        <Text style={styles.selectedTimeText}>
+          Selected Time: {selectedTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+        </Text>
+      )} */}
 
-      <Modal isVisible={isFromTimePickerVisible} onBackdropPress={hideFromTimePicker}>
-        <View style={styles.modalContainer}>
-          <DateTimePickerModal
-            isVisible={isFromTimePickerVisible}
-            mode="time"
-            onConfirm={handleFromTimeConfirm}
-            onCancel={hideFromTimePicker}
-          />
-        </View>
-      </Modal>
-
-      <Modal isVisible={isToTimePickerVisible} onBackdropPress={hideToTimePicker}>
-        <View style={styles.modalContainer}>
-          <DateTimePickerModal
-            isVisible={isToTimePickerVisible}
-            mode="time"
-            onConfirm={handleToTimeConfirm}
-            onCancel={hideToTimePicker}
-          />
-        </View>
-      </Modal>
+      
+      
     </View>
   );
 };
@@ -128,22 +136,164 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  button: {
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  manualInput: {
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 4,
+    padding: 10,
+    flex: 1,
+    marginRight: 10,
+    color : 'black',
+  },
+  pickButton: {
     backgroundColor: 'blue',
     padding: 10,
-    borderRadius: 5,
-    marginVertical: 10,
+    borderRadius: 4,
   },
-  buttonText: {
+  pickButtonText: {
     color: 'white',
-    fontSize: 16,
+    fontWeight: 'bold',
   },
-  modalContainer: {
-    backgroundColor : 'gray',
+  selectedDateText: {
+    marginTop: 10,
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+    selectedTimeText: {
+    marginTop: 10,
+    fontSize: 18,
+    fontWeight: 'bold',
+    color : 'black',
   },
   text : {
     color : 'black',
-  },
-}
-)
+  }
+});
+
 export default YourComponent;
+
+
+
+
+
+
+
+
+
+
+
+// import React, { useState } from 'react';
+// import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+// import DateTimePickerModal from 'react-native-modal-datetime-picker';
+
+// const YourComponent = () => {
+//   const [isTimePickerVisible, setTimePickerVisible] = useState(false);
+//   const [selectedTime, setSelectedTime] = useState(null);
+//   const [manualTime, setManualTime] = useState('');
+
+//   const showTimePicker = () => {
+//     setTimePickerVisible(true);
+//   };
+
+//   const hideTimePicker = () => {
+//     setTimePickerVisible(false);
+//   };
+
+//   const handleTimeConfirm = (time) => {
+//     setSelectedTime(time);
+//     setManualTime(time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+//     hideTimePicker();
+//   };
+
+//   const handleManualTimeInput = () => {
+//     const timeParts = manualTime.split(':');
+//     const hours = parseInt(timeParts[0]);
+//     const minutes = parseInt(timeParts[1]);
+
+//     const time = new Date();
+//     time.setHours(hours);
+//     time.setMinutes(minutes);
+
+//     if (!isNaN(time.getTime())) {
+//       setSelectedTime(time);
+//     }
+//   };
+
+//   return (
+//     <View style={styles.container}>
+//       <View style={styles.inputContainer}>
+//         <TextInput
+//           style={styles.manualInput}
+//           placeholder="Enter time manually (HH:MM)"
+//           placeholderTextColor={'black'}
+//           value={manualTime}
+//           onChangeText={setManualTime}
+//           onBlur={handleManualTimeInput}
+//         />
+
+//         <TouchableOpacity style={styles.pickButton} onPress={showTimePicker}>
+//           <Text style={styles.pickButtonText}>Pick</Text>
+//         </TouchableOpacity>
+//       </View>
+
+//       <DateTimePickerModal
+//         isVisible={isTimePickerVisible}
+//         mode="time"
+//         onConfirm={handleTimeConfirm}
+//         onCancel={hideTimePicker}
+//       />
+
+//       {selectedTime && (
+//         <Text style={styles.selectedTimeText}>
+//           Selected Time: {selectedTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+//         </Text>
+//       )}
+//     </View>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+//   inputContainer: {
+//     flexDirection: 'row',
+//     alignItems: 'center',
+//   },
+//   manualInput: {
+//     borderWidth: 1,
+//     borderColor: 'gray',
+//     borderRadius: 4,
+//     padding: 10,
+//     flex: 1,
+//     marginRight: 10,
+//     color : 'black',
+//   },
+//   pickButton: {
+//     backgroundColor: 'blue',
+//     padding: 10,
+//     borderRadius: 4,
+//   },
+//   pickButtonText: {
+//     color: 'white',
+//     fontWeight: 'bold',
+//   },
+//   selectedTimeText: {
+//     marginTop: 10,
+//     fontSize: 18,
+//     fontWeight: 'bold',
+//     color : 'black',
+//   },
+//   text : {
+//     color : 'black',
+//   }
+// });
+
+// export default YourComponent;

@@ -16,6 +16,7 @@ import AssignPanelMember from './Pages/AssignPanelMember';
 import Sparsh from './Pages/Sparsh';
 import Ticket from './Pages/ticket';
 import TimeandDate from './Pages/TimeandDate';
+import HomeScreen from './Pages/HomeScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -37,6 +38,7 @@ const App = () => {
         <Stack.Screen name='Sparsh' component={Sparsh} options={{ headerShown : false }} />
         <Stack.Screen name='ticket' component={Ticket} options={{ headerShown : false }} />
         <Stack.Screen name='DateTime' component={TimeandDate} options={{ headerShown: false }} />
+        <Stack.Screen name="HomeScreen" component={HomeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
