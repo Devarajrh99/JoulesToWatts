@@ -7,26 +7,26 @@ const YourComponent = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [manualDate, setManualDate] = useState('');
 
-  const [isTimePickerVisible, setTimePickerVisible] = useState(false);
-  const [selectedTime, setSelectedTime] = useState(null);
-  const [manualTime, setManualTime] = useState('');
+  const [isFromTimePickerVisible, setFromTimePickerVisible] = useState(false);
+  const [selectedFromTime, setSelectedFromTime] = useState(null);
+  const [manualFromTime, setManualFromTime] = useState('');
 
-  const showTimePicker = () => {
-    setTimePickerVisible(true);
+  const showFromTimePicker = () => {
+    setFromTimePickerVisible(true);
   };
 
-  const hideTimePicker = () => {
-    setTimePickerVisible(false);
+  const hideFromTimePicker = () => {
+    setFromTimePickerVisible(false);
   };
 
-  const handleTimeConfirm = (time) => {
-    setSelectedTime(time);
-    setManualTime(time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
-    hideTimePicker();
+  const handleFromTimeConfirm = (time) => {
+    setSelectedFromTime(time);
+    setManualFromTime(time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+    hideFromTimePicker();
   };
 
-  const handleManualTimeInput = () => {
-    const timeParts = manualTime.split(':');
+  const handleManualFromTimeInput = () => {
+    const timeParts = manualFromTime.split(':');
     const hours = parseInt(timeParts[0]);
     const minutes = parseInt(timeParts[1]);
 
@@ -35,7 +35,7 @@ const YourComponent = () => {
     time.setMinutes(minutes);
 
     if (!isNaN(time.getTime())) {
-      setSelectedTime(time);
+      setSelectedFromTime(time);
     }
   };
 
@@ -67,8 +67,42 @@ const YourComponent = () => {
     }
   };
 
+
+  const [isToTimePickerVisible, setToTimePickerVisible] = useState(false);
+  const [selectedToTime, setSelectedToTime] = useState(null);
+  const [manualToTime, setManualToTime] = useState('');
+
+  const showToTimePicker = () => {
+    setToTimePickerVisible(true);
+  };
+
+  const hideToTimePicker = () => {
+    setToTimePickerVisible(false);
+  };
+
+  const handleToTimeConfirm = (time) => {
+    setSelectedToTime(time);
+    setManualToTime(time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+    hideToTimePicker();
+  };
+
+  const handleManualToTimeInput = () => {
+    const timeParts = manualToTime.split(':');
+    const hours = parseInt(timeParts[0]);
+    const minutes = parseInt(timeParts[1]);
+
+    const time = new Date();
+    time.setHours(hours);
+    time.setMinutes(minutes);
+
+    if (!isNaN(time.getTime())) {
+      setSelectedToTime(time);
+    }
+  };
+
   return (
     <View style={styles.container}>
+      <View style={{ flexDirection : 'column' }}>
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.manualInput}
@@ -85,17 +119,32 @@ const YourComponent = () => {
 
           <TextInput
           style={styles.manualInput}
-          placeholder="Enter time manually (HH:MM)"
+          placeholder="Enter From time manually (HH:MM)"
           placeholderTextColor={'black'}
-          value={manualTime}
-          onChangeText={setManualTime}
-          onBlur={handleManualTimeInput}
+          value={manualFromTime}
+          onChangeText={setManualFromTime}
+          onBlur={handleManualFromTimeInput}
         />
 
-        <TouchableOpacity style={styles.pickButton} onPress={showTimePicker}>
+        <TouchableOpacity style={styles.pickButton} onPress={showFromTimePicker}>
+          <Text style={styles.pickButtonText}>Pick</Text>
+        </TouchableOpacity>
+
+
+        <TextInput
+          style={styles.manualInput}
+          placeholder="Enter To time manually (HH:MM)"
+          placeholderTextColor={'black'}
+          value={manualToTime}
+          onChangeText={setManualToTime}
+          onBlur={handleManualToTimeInput}
+        />
+
+        <TouchableOpacity style={styles.pickButton} onPress={showToTimePicker}>
           <Text style={styles.pickButtonText}>Pick</Text>
         </TouchableOpacity>
       </View>
+      
 
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
@@ -112,10 +161,17 @@ const YourComponent = () => {
 
       
        <DateTimePickerModal
-        isVisible={isTimePickerVisible}
+        isVisible={isFromTimePickerVisible}
         mode="time"
-        onConfirm={handleTimeConfirm}
-        onCancel={hideTimePicker}
+        onConfirm={handleFromTimeConfirm}
+        onCancel={hideFromTimePicker}
+      />
+
+<DateTimePickerModal
+        isVisible={isToTimePickerVisible}
+        mode="time"
+        onConfirm={handleToTimeConfirm}
+        onCancel={hideToTimePicker}
       />
 
       {/* {selectedTime && (
@@ -125,7 +181,7 @@ const YourComponent = () => {
       )} */}
 
       
-      
+</View>
     </View>
   );
 };

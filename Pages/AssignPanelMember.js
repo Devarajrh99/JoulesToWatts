@@ -1,54 +1,41 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Modal, Button, StyleSheet, TextInput } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, TextInput, Modal, TouchableWithoutFeedback, Animated } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import moment from 'moment';
 
 
-const Filter = () => {
-  const [isModalVisible, setModalVisible] = useState(false);
-  // const [selectedExperience, setSelectedExperience] = useState('');
-  // const [selectedSalary, setSelectedSalary] = useState('');
-  // const [location, setLocation] = useState('');
+const SideMenu = () => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const animatedValue = new Animated.Value(0);
+  
+    const toggleMenu = () => {
+      setIsMenuOpen(!isMenuOpen);
+    };
+  
+    useEffect(() => {
+      Animated.timing(animatedValue, {
+        toValue: isMenuOpen ? 1 : 0,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    }, [isMenuOpen]);
+  
+    const opacity = animatedValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, 0.5],
+    });
+  
+    const menuTranslateX = animatedValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: [-300, 0],
+    });
 
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
-  };
-
-  // const resetFilter = () => {
-  //   setSelectedExperience('');
-  //   setSelectedSalary('');
-  //   setLocation('');
-  // };
-
-  const handleApplyFilter = () => {
-    // Apply the filter based on the selected values
-    // console.log('Selected Experience:', selectedExperience);
-    // console.log('Selected Salary:', selectedSalary);
-    // console.log('Location:', location);
-
-    // Close the modal
-    toggleModal();
-  };
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
-  const [isFromTimePickerVisible, setFromTimePickerVisible] = useState(false);
-  const [isToTimePickerVisible, setToTimePickerVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [manualDate, setManualDate] = useState('');
+
+  const [isFromTimePickerVisible, setFromTimePickerVisible] = useState(false);
   const [selectedFromTime, setSelectedFromTime] = useState(null);
-  const [selectedToTime, setSelectedToTime] = useState(null);
-
-  const showDatePicker = () => {
-    setDatePickerVisible(true);
-  };
-
-  const hideDatePicker = () => {
-    setDatePickerVisible(false);
-  };
-
-  const handleDateConfirm = (date) => {
-    setSelectedDate(date);
-    hideDatePicker();
-  };
+  const [manualFromTime, setManualFromTime] = useState('');
 
   const showFromTimePicker = () => {
     setFromTimePickerVisible(true);
@@ -60,8 +47,56 @@ const Filter = () => {
 
   const handleFromTimeConfirm = (time) => {
     setSelectedFromTime(time);
+    setManualFromTime(time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
     hideFromTimePicker();
   };
+
+  const handleManualFromTimeInput = () => {
+    const timeParts = manualFromTime.split(':');
+    const hours = parseInt(timeParts[0]);
+    const minutes = parseInt(timeParts[1]);
+
+    const time = new Date();
+    time.setHours(hours);
+    time.setMinutes(minutes);
+
+    if (!isNaN(time.getTime())) {
+      setSelectedFromTime(time);
+    }
+  };
+
+
+  const showDatePicker = () => {
+    setDatePickerVisible(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisible(false);
+  };
+
+  const handleDateConfirm = (date) => {
+    setSelectedDate(date);
+    setManualDate(date.toISOString().split('T')[0]);
+    hideDatePicker();
+  };
+
+  const handleManualDateInput = () => {
+    const dateParts = manualDate.split('-');
+    const year = parseInt(dateParts[0]);
+    const month = parseInt(dateParts[1]) - 1;
+    const day = parseInt(dateParts[2]);
+
+    const date = new Date(year, month, day);
+
+    if (!isNaN(date.getTime())) {
+      setSelectedDate(date);
+    }
+  };
+
+
+  const [isToTimePickerVisible, setToTimePickerVisible] = useState(false);
+  const [selectedToTime, setSelectedToTime] = useState(null);
+  const [manualToTime, setManualToTime] = useState('');
 
   const showToTimePicker = () => {
     setToTimePickerVisible(true);
@@ -73,20 +108,91 @@ const Filter = () => {
 
   const handleToTimeConfirm = (time) => {
     setSelectedToTime(time);
+    setManualToTime(time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
     hideToTimePicker();
   };
 
-  return (
-    <View style={styles.container}>
-      <TouchableOpacity style={styles.filterButton} onPress={toggleModal}>
-        <Text style={styles.filterButtonText}>Assign As Panel Member</Text>
-      </TouchableOpacity>
+  const handleManualToTimeInput = () => {
+    const timeParts = manualToTime.split(':');
+    const hours = parseInt(timeParts[0]);
+    const minutes = parseInt(timeParts[1]);
 
-      <Modal visible={isModalVisible} transparent animationType="fade">
-        <View style={styles.modalBackdrop}>
-          <View style={styles.modalContent}>
-<TouchableOpacity style={styles.datebutton} onPress={showDatePicker}><Text style={styles.text}>Choose Date</Text></TouchableOpacity>
-{selectedDate && <Text style={styles.datetext}>Selected Date: {moment(selectedDate).format('YYYY-MM-DD')}</Text>}
+    const time = new Date();
+    time.setHours(hours);
+    time.setMinutes(minutes);
+
+    if (!isNaN(time.getTime())) {
+      setSelectedToTime(time);
+    }
+  };
+
+  
+    return (
+      <View style={styles.container}>
+        
+        <TouchableOpacity onPress={toggleMenu} style={styles.menuButton}>
+          <Text style = {styles.text}>Assign As Panel Member</Text>
+        </TouchableOpacity>
+  
+        <Modal visible={isMenuOpen} transparent animationType="fade">
+          <TouchableWithoutFeedback onPress={toggleMenu}>
+            <Animated.View style={[styles.overlay, { opacity }]} />
+          </TouchableWithoutFeedback>
+  
+          <Animated.View style={[styles.sideMenu, { transform: [{ translateX: menuTranslateX }] }]}>
+            <TouchableOpacity onPress={toggleMenu} style={styles.closeButton}>
+              <Text style = {styles.text}>Close Menu</Text>
+            </TouchableOpacity>
+
+            <View style={styles.inputContainer}>
+            <View style={{flexDirection : 'column'}}>
+              <View style={{flexDirection : 'row'}}>
+        <TextInput
+          style={styles.manualInput}
+          placeholder="Enter date manually (YYYY-MM-DD)"
+          placeholderTextColor={'gray'}
+          value={manualDate}
+          onChangeText={setManualDate}
+          onBlur={handleManualDateInput}
+        />
+
+        <TouchableOpacity style={styles.pickButton} onPress={showDatePicker}>
+          <Text style={styles.pickButtonText}>Pick</Text>
+        </TouchableOpacity>
+        </View>
+
+        <View style={{flexDirection : 'row'}}>
+        <TextInput
+          style={styles.manualInput}
+          placeholder="Enter From time manually (HH:MM)"
+          placeholderTextColor={'black'}
+          value={manualFromTime}
+          onChangeText={setManualFromTime}
+          onBlur={handleManualFromTimeInput}
+        />
+
+        <TouchableOpacity style={styles.pickButton} onPress={showFromTimePicker}>
+          <Text style={styles.pickButtonText}>Pick</Text>
+        </TouchableOpacity>
+        </View>
+
+        <View style={{flexDirection : 'row'}}>
+        <TextInput
+          style={styles.manualInput}
+          placeholder="Enter To time manually (HH:MM)"
+          placeholderTextColor={'black'}
+          value={manualToTime}
+          onChangeText={setManualToTime}
+          onBlur={handleManualToTimeInput}
+        />
+
+        <TouchableOpacity style={styles.pickButton} onPress={showToTimePicker}>
+          <Text style={styles.pickButtonText}>Pick</Text>
+        </TouchableOpacity>
+        </View>
+        </View>
+      </View>
+
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
         mode="date"
@@ -94,136 +200,107 @@ const Filter = () => {
         onCancel={hideDatePicker}
       />
 
-
-      <View style={{ flexDirection : 'row', width : '100%', justifyContent : 'space-between' }}>
-      {/* <Button title="Select From Time" onPress={showFromTimePicker} /> */}
-      <View style={{ flexDirection : 'column' }}>
-      <TouchableOpacity style={styles.frombutton} onPress={showFromTimePicker}><Text style={styles.text}>From Time</Text></TouchableOpacity>
-      {selectedFromTime && <Text style={styles.timetext}>From Time: {moment(selectedFromTime).format('HH:mm')}</Text>}
-      <DateTimePickerModal
+<DateTimePickerModal
         isVisible={isFromTimePickerVisible}
         mode="time"
         onConfirm={handleFromTimeConfirm}
         onCancel={hideFromTimePicker}
       />
-      </View>
 
-      {/* <Button title="Select To Time" onPress={showToTimePicker} /> */}
-      <View style={{ flexDirection : 'column' }}>
-      <TouchableOpacity style={styles.tobutton} onPress={showToTimePicker}><Text style={styles.text}>To Time</Text></TouchableOpacity>
-      {selectedToTime && <Text style={styles.timetext}>To Time: {moment(selectedToTime).format('HH:mm')}</Text>}
-      <DateTimePickerModal
+<DateTimePickerModal
         isVisible={isToTimePickerVisible}
         mode="time"
         onConfirm={handleToTimeConfirm}
         onCancel={hideToTimePicker}
       />
+
+            
+          </Animated.View>
+        </Modal>
+  
+        {/* Rest of the content of your Home Screen */}
       </View>
-      </View>
-
-            <TouchableOpacity style={styles.filterbutton} onPress={handleApplyFilter}>
-              <Text style={styles.text}>Schedule Appointment</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
-    </View>
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    // alignItems: 'center',
-  },
-  filterButton: {
-    backgroundColor: 'green',
-    // padding: 10,
-    borderRadius: 5,
-    marginLeft : '10%'
-  },
-  filterButtonText: {
-    color: 'white',
-  },
-  datebutton : {
-    backgroundColor : '#5F9EA0',
-    width : '80%',
-    alignSelf : 'center',
-    marginTop : '10%',
-    borderRadius : 5,
-  },
-  frombutton : {
-    backgroundColor : '#5F9EA0',
-    width : '80%',
-    alignSelf : 'center',
-    borderRadius : 5,
-    marginTop : '10%',
-  },
-  tobutton : {
-    backgroundColor : '#5F9EA0',
-    width : '80%',
-    alignSelf : 'center',
-    borderRadius : 5,
-    marginTop : '10%',
-  },
-  modalBackdrop: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContent: {
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 10,
-    width: '70%',
-    height : '40%',
-  },
-  texthead : {
-    color : 'black',
-    fontWeight : 'bold',
-    fontSize : 18
-  },
-  texthead01 : {
-    color : 'black',
-    fontWeight : 'bold',
-    fontSize : 20
-  },
-  picker : {
-    color : 'black',
-    backgroundColor : '#C0C0C0',
-  },
-  text : {
-    color : 'black',
-  },
-  datetext : {
-    color : 'black',
-    marginLeft : '10%',
-  },
-  timetext : {
-    color : 'black',
-    marginLeft : '10%',
-    alignSelf : 'center',
-  },
-  textinput : {
-    borderWidth : 1,
-    borderRadius : 10,
-    borderColor : 'gray',
-    color : 'black'
-  },
-  filterbutton : {
-    backgroundColor : '#5F9EA0',
-    color : 'black',
-    width : '30%',
-    alignSelf : 'center',
-    marginTop : '5%',
-    borderRadius : 5,
-    height : 30,
-  },
-  reset : {
-    color : 'red'
-  },
-})
-
-export default Filter;
+    );
+  };
+  
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    menuButton: {
+    //   paddingHorizontal: 16,
+      paddingVertical: 8,
+      backgroundColor: 'green',
+    },
+    overlay: {
+      flex: 1,
+      backgroundColor: '#000000',
+    },
+    sideMenu: {
+      position: 'absolute',
+      top: '30%',
+      // left: 0,
+      width: '50%',
+      height: '50%',
+      backgroundColor: '#ffffff',
+      padding: 16,
+      borderRadius : 5,
+      alignSelf : 'center',
+      // alignContent : 'center',
+      // alignItems : 'center',
+    },
+    closeButton: {
+      marginBottom: 16,
+      padding: 8,
+      backgroundColor: 'white',
+    },
+    text : {
+        color : 'black',
+        alignContent : 'center',
+    },
+    sidetext : {
+      color : 'black',
+      alignContent : 'center',
+      marginBottom : 20,
+      marginLeft : '8%',
+    },
+    inputContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    manualInput: {
+      borderWidth: 1,
+      borderColor: 'gray',
+      borderRadius: 4,
+      padding: 10,
+      flex: 1,
+      marginRight: 10,
+      color : 'black',
+    },
+    pickButton: {
+      backgroundColor: 'blue',
+      padding: 10,
+      borderRadius: 4,
+    },
+    pickButtonText: {
+      color: 'white',
+      fontWeight: 'bold',
+    },
+    selectedDateText: {
+      marginTop: 10,
+      fontSize: 18,
+      fontWeight: 'bold',
+      color: 'black',
+    },
+      selectedTimeText: {
+      marginTop: 10,
+      fontSize: 18,
+      fontWeight: 'bold',
+      color : 'black',
+    },
+  });
+  
+  export default SideMenu;
+  
