@@ -74,13 +74,13 @@ const styles = StyleSheet.create({
   },
   textinput : {
     height : 40,
-    width : 300,
+    // width : 300,
     borderWidth : 1,
     color : 'black',
     borderRadius:5,
-    marginLeft : 30,
+    marginLeft : '10%',
     marginBottom : 30,
-    marginRight : 30,
+    marginRight : '10%',
   },
   textinput01 : {
     height : 40,

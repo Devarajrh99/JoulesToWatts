@@ -79,7 +79,7 @@ const Filter = () => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.filterButton} onPress={toggleModal}>
-        <Text style={styles.filterButtonText}>Filter</Text>
+        <Text style={styles.filterButtonText}>Assign As Panel Member</Text>
       </TouchableOpacity>
 
       <Modal visible={isModalVisible} transparent animationType="fade">
@@ -128,8 +128,9 @@ const Filter = () => {
               <Text style={styles.text}>Apply Filter</Text>
             </TouchableOpacity> */}
 
-<Button title="Select Date" onPress={showDatePicker} />
-{selectedDate && <Text style={styles.text}>Selected Date: {moment(selectedDate).format('YYYY-MM-DD')}</Text>}
+{/* <Button title="Select Date" onPress={showDatePicker} /> */}
+<TouchableOpacity style={styles.datebutton} onPress={showDatePicker}><Text style={styles.text}>Choose Date</Text></TouchableOpacity>
+{selectedDate && <Text style={styles.datetext}>Selected Date: {moment(selectedDate).format('YYYY-MM-DD')}</Text>}
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
         mode="date"
@@ -137,23 +138,32 @@ const Filter = () => {
         onCancel={hideDatePicker}
       />
 
-      <Button title="Select From Time" onPress={showFromTimePicker} />
-      {selectedFromTime && <Text style={styles.text}>Selected From Time: {moment(selectedFromTime).format('HH:mm')}</Text>}
+
+      <View style={{ flexDirection : 'row', width : '100%', justifyContent : 'space-between' }}>
+      {/* <Button title="Select From Time" onPress={showFromTimePicker} /> */}
+      <View style={{ flexDirection : 'column' }}>
+      <TouchableOpacity style={styles.frombutton} onPress={showFromTimePicker}><Text style={styles.text}>From Time</Text></TouchableOpacity>
+      {selectedFromTime && <Text style={styles.timetext}>From Time: {moment(selectedFromTime).format('HH:mm')}</Text>}
       <DateTimePickerModal
         isVisible={isFromTimePickerVisible}
         mode="time"
         onConfirm={handleFromTimeConfirm}
         onCancel={hideFromTimePicker}
       />
+      </View>
 
-      <Button title="Select To Time" onPress={showToTimePicker} />
-      {selectedToTime && <Text style={styles.text}>Selected To Time: {moment(selectedToTime).format('HH:mm')}</Text>}
+      {/* <Button title="Select To Time" onPress={showToTimePicker} /> */}
+      <View style={{ flexDirection : 'column' }}>
+      <TouchableOpacity style={styles.tobutton} onPress={showToTimePicker}><Text style={styles.text}>To Time</Text></TouchableOpacity>
+      {selectedToTime && <Text style={styles.timetext}>To Time: {moment(selectedToTime).format('HH:mm')}</Text>}
       <DateTimePickerModal
         isVisible={isToTimePickerVisible}
         mode="time"
         onConfirm={handleToTimeConfirm}
         onCancel={hideToTimePicker}
       />
+      </View>
+      </View>
 
             <TouchableOpacity style={styles.filterbutton} onPress={handleApplyFilter}>
               <Text style={styles.text}>Apply Filter</Text>
@@ -172,25 +182,45 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   filterButton: {
-    // backgroundColor: 'blue',
+    backgroundColor: '#5F9EA0',
     padding: 10,
     borderRadius: 5,
   },
   filterButtonText: {
-    color: 'green',
+    color: '#fff',
     // fontSize: 16,
+  },
+  datebutton : {
+    backgroundColor : '#5F9EA0',
+    width : '80%',
+    alignSelf : 'center',
+    marginTop : '10%',
+    borderRadius : 5,
+  },
+  frombutton : {
+    backgroundColor : '#5F9EA0',
+    width : '80%',
+    alignSelf : 'center',
+    borderRadius : 5
+  },
+  tobutton : {
+    backgroundColor : '#5F9EA0',
+    width : '80%',
+    alignSelf : 'center',
+    borderRadius : 5
   },
   modalBackdrop: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
-    alignItems: 'flex-end',
+    alignItems: 'center',
   },
   modalContent: {
     backgroundColor: 'white',
     padding: 20,
     borderRadius: 10,
     width: '70%',
+    height : '40%',
   },
   texthead : {
     color : 'black',
@@ -207,7 +237,18 @@ const styles = StyleSheet.create({
     backgroundColor : '#C0C0C0',
   },
   text : {
-    color : 'black'
+    color : 'black',
+  },
+  datetext : {
+    color : 'black',
+    marginLeft : '10%',
+    marginBottom : '10%',
+  },
+  timetext : {
+    color : 'black',
+    marginLeft : '10%',
+    alignSelf : 'center',
+    marginBottom : '10%'
   },
   textinput : {
     borderWidth : 1,

@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, TouchableOpacity, ImageBackground, Dimensions, 
 
 import Header from "./Header";
 import Footer from "./Footer";
+import AssignPanelMember from './AssignPanelMember';
 
 const MoreDetails = () => {
     return (
@@ -11,15 +12,16 @@ const MoreDetails = () => {
             <Header />
 
             <ImageBackground style={styles.background} source={require('./Images/background.png')}>
-                <View style={{ flexDirection : 'row', width : '55%', justifyContent : 'space-between', marginRight : '8%'}}>
+                <View style={{ flexDirection : 'row', width : '90%', justifyContent : 'space-between', marginRight : '8%'}}>
                     <View style={{ flexDirection : 'column'}}>
                 <Text style={styles.texthead01}>Interview Panel For Interactive Developer</Text>
                 <Text style={styles.text}>Job created on 28th September 2015</Text>
                 <Text style={styles.texthead02}>₹ 4000 per panel member</Text>
                 </View>
-                <TouchableOpacity style={styles.button}>
+                <AssignPanelMember />
+                {/* <TouchableOpacity style={styles.button}>
                     <Text style={styles.text}>Assign as Panel Member</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 </View>
             </ImageBackground>
 
