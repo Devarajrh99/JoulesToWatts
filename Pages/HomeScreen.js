@@ -29,7 +29,7 @@ const SideMenu = () => {
       outputRange: [-300, 0],
     });
 
-    const [isDatePickerVisible, setDatePickerVisible] = useState(false);
+  const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [manualDate, setManualDate] = useState('');
 
@@ -178,7 +178,7 @@ const SideMenu = () => {
     },
     sideMenu: {
       position: 'absolute',
-      // top: 0,
+      top: '30%',
       // left: 0,
       width: '50%',
       height: '50%',

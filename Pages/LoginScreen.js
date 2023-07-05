@@ -78,9 +78,9 @@ const styles = StyleSheet.create({
     borderWidth : 1,
     color : 'black',
     borderRadius:5,
-    marginLeft : '10%',
+    marginLeft : '8%',
     marginBottom : 30,
-    marginRight : '10%',
+    marginRight : '8%',
   },
   textinput01 : {
     height : 40,
@@ -102,9 +102,9 @@ const styles = StyleSheet.create({
     marginTop : 20,
   },
   button01: {
-    marginLeft: 40,
+    marginLeft: '10%',
     padding: 10,
-    width : 120,
+    // width : 120,
     backgroundColor: '#75C597',
     borderRadius: 5,
     marginBottom : 20,
