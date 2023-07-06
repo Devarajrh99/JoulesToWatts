@@ -146,25 +146,25 @@ const SideMenu = () => {
 
             <View style={styles.inputContainer}>
             <View style={{flexDirection : 'column'}}>
-              <View style={{flexDirection : 'row'}}>
+              <View style={{flexDirection : 'row', width : '90%', justifyContent : 'space-around'}}>
         <TextInput
           style={styles.manualInput}
-          placeholder="Enter date manually (YYYY-MM-DD)"
-          placeholderTextColor={'gray'}
+          placeholder="Date (YYYY-MM-DD)"
+          placeholderTextColor={'black'}
           value={manualDate}
           onChangeText={setManualDate}
-          onBlur={handleManualDateInput}
-        />
+          onBlur={handleManualDateInput}></TextInput>
 
         <TouchableOpacity style={styles.pickButton} onPress={showDatePicker}>
-          <Text style={styles.pickButtonText}>Pick</Text>
+          <Text style={styles.pickButtonText}>Date</Text>
         </TouchableOpacity>
         </View>
 
-        <View style={{flexDirection : 'row'}}>
+        <View style={{ flexDirection : 'row', width : '60%', justifyContent : 'space-between' }}>
+        <View style={{flexDirection : 'row', width : '80%', justifyContent : 'space-evenly'}}>
         <TextInput
           style={styles.manualInput}
-          placeholder="Enter From time manually (HH:MM)"
+          placeholder="From Time (HH:MM)"
           placeholderTextColor={'black'}
           value={manualFromTime}
           onChangeText={setManualFromTime}
@@ -172,14 +172,14 @@ const SideMenu = () => {
         />
 
         <TouchableOpacity style={styles.pickButton} onPress={showFromTimePicker}>
-          <Text style={styles.pickButtonText}>Pick</Text>
+          <Text style={styles.pickButtonText}>Time</Text>
         </TouchableOpacity>
         </View>
 
-        <View style={{flexDirection : 'row'}}>
+        <View style={{flexDirection : 'row', width : '70%', justifyContent : 'space-evenly'}}>
         <TextInput
           style={styles.manualInput}
-          placeholder="Enter To time manually (HH:MM)"
+          placeholder="To Time (HH:MM)"
           placeholderTextColor={'black'}
           value={manualToTime}
           onChangeText={setManualToTime}
@@ -187,11 +187,16 @@ const SideMenu = () => {
         />
 
         <TouchableOpacity style={styles.pickButton} onPress={showToTimePicker}>
-          <Text style={styles.pickButtonText}>Pick</Text>
+          <Text style={styles.pickButtonText}>Time</Text>
         </TouchableOpacity>
         </View>
         </View>
+        </View>
       </View>
+
+      <TouchableOpacity style={styles.button} onPress={toggleMenu}>
+        <Text style={styles.text}>Schedule Appointment</Text>
+      </TouchableOpacity>
 
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
@@ -217,9 +222,7 @@ const SideMenu = () => {
             
           </Animated.View>
         </Modal>
-  
-        {/* Rest of the content of your Home Screen */}
-      </View>
+        </View>
     );
   };
   
@@ -230,9 +233,9 @@ const SideMenu = () => {
       alignItems: 'center',
     },
     menuButton: {
-    //   paddingHorizontal: 16,
-      paddingVertical: 8,
+      padding : 8,
       backgroundColor: 'green',
+      borderRadius : 5,
     },
     overlay: {
       flex: 1,
@@ -241,15 +244,12 @@ const SideMenu = () => {
     sideMenu: {
       position: 'absolute',
       top: '30%',
-      // left: 0,
-      width: '50%',
+      width: '70%',
       height: '50%',
       backgroundColor: '#ffffff',
       padding: 16,
       borderRadius : 5,
       alignSelf : 'center',
-      // alignContent : 'center',
-      // alignItems : 'center',
     },
     closeButton: {
       marginBottom: 16,
@@ -272,17 +272,18 @@ const SideMenu = () => {
     },
     manualInput: {
       borderWidth: 1,
-      borderColor: 'gray',
+      borderColor: 'black',
       borderRadius: 4,
       padding: 10,
       flex: 1,
-      marginRight: 10,
       color : 'black',
+      alignSelf : 'center',
     },
     pickButton: {
       backgroundColor: 'blue',
-      padding: 10,
+      padding: 5,
       borderRadius: 4,
+      alignSelf : 'center',
     },
     pickButtonText: {
       color: 'white',
@@ -300,6 +301,13 @@ const SideMenu = () => {
       fontWeight: 'bold',
       color : 'black',
     },
+    button : {
+      backgroundColor : '#5f9ea0',
+      alignSelf : 'center',
+      padding : 10,
+      borderRadius : 5,
+      marginTop : '10%',
+    }
   });
   
   export default SideMenu;

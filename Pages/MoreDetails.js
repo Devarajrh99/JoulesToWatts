@@ -12,17 +12,17 @@ const MoreDetails = () => {
             <Header />
 
             <ImageBackground style={styles.background} source={require('./Images/background.png')}>
-                <View style={{ flexDirection : 'row', width : '75%', justifyContent : 'space-between', marginRight : '5%'}}>
+                <View style={{ flexDirection : 'row', marginRight : '5%'}}>
+                <View style={{ flex : 0.7 }}>
                 <Text style={styles.texthead01}>Interview Panel For Interactive Developer</Text>
+                </View>
+                <View style={{ flex : 0.3 }}>
                 <AssignPanelMember />
+                </View>
                 </View>
                 <View style={{ flexDirection : 'column'}}>
                 <Text style={styles.text}>Job created on 28th September 2015</Text>
                 <Text style={styles.texthead02}>₹ 4000 per panel member</Text>
-                {/* <AssignPanelMember /> */}
-                {/* <TouchableOpacity style={styles.button}>
-                    <Text style={styles.text}>Assign as Panel Member</Text>
-                </TouchableOpacity> */}
                 </View>
             </ImageBackground>
 
@@ -115,7 +115,8 @@ const styles = StyleSheet.create({
         color : 'black',
         backgroundColor : '#5f9ea0',
         borderRadius : 5,
-        marginBottom : '15%'
+        marginBottom : '15%',
+        padding : 5,
       }
 })
 
