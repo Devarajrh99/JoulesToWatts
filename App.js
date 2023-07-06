@@ -17,6 +17,8 @@ import Sparsh from './Pages/Sparsh';
 import Ticket from './Pages/ticket';
 import TimeandDate from './Pages/TimeandDate';
 import HomeScreen from './Pages/HomeScreen';
+import ProductListingScreen from './Pages/ProductListingScreen';
+import ProductDetailScreen from './Pages/ProductDetailScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -39,6 +41,8 @@ const App = () => {
         <Stack.Screen name='ticket' component={Ticket} options={{ headerShown : false }} />
         <Stack.Screen name='DateTime' component={TimeandDate} options={{ headerShown: false }} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
+        <Stack.Screen name='ProductListing' component={ProductListingScreen} />
+        <Stack.Screen name='ProductDetail' component={ProductDetailScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

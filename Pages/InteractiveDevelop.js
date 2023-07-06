@@ -45,7 +45,7 @@ const InteractiveDeveloper = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <ScrollView>
-                <Header />
+            <Header />
             <Text style={styles.texthead}>Interactive Developer</Text>
             <Text style={styles.text}>Job created on 6th March 2023</Text>
             <Text style={styles.texthead}>Description</Text>

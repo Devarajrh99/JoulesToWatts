@@ -58,8 +58,8 @@ const OtpScreen = ({ navigation }) => {
                   <Text style={styles.buttonText}>AssignPanelMember</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button01} onPress={() => navigation.navigate('DateTime')}>
-                  <Text style={styles.buttonText}>DateTime</Text>
+                <TouchableOpacity style={styles.button01} onPress={() => navigation.navigate('ProductListing')}>
+                  <Text style={styles.buttonText}>Product Listing</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.button01} onPress={() => navigation.navigate('HomeScreen')}>
