@@ -6,7 +6,7 @@ import Footer from "./Footer";
 import SearchBox from "./SearchBox";
 import Filter from "./Filter";
 
-const InterViewPanel = ({ navigation }) => {
+const InterViewPanel = ({ route, navigation }) => {
     return (
         <View style={styles.container}>
             <ScrollView>

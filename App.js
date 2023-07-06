@@ -7,7 +7,7 @@ import OtpScreen from './Pages/OtpScreen';
 import Job_PortalScreen from './Pages/Job_PortalScreen';
 import DropdownMenu from './Pages/Dropdown';
 import MyReferrals from './Pages/My_referrals';
-import InteractiveDeveloper from './Pages/InteractiveDevelop';
+import InteractiveDeveloper from './Pages/InteractiveDeveloper';
 import InterviewPanel from './Pages/InterviewPanel';
 import MoreDetails from './Pages/MoreDetails';
 import SideMenu from './Pages/SideMenu';
@@ -18,7 +18,7 @@ import Ticket from './Pages/ticket';
 import TimeandDate from './Pages/TimeandDate';
 import HomeScreen from './Pages/HomeScreen';
 import ProductListingScreen from './Pages/ProductListingScreen';
-import ProductDetailScreen from './Pages/ProductDetailScreen';
+import JobDetails from './Pages/JobDetails';
 
 const Stack = createNativeStackNavigator();
 
@@ -31,7 +31,7 @@ const App = () => {
         <Stack.Screen name='Job_Portal' component={Job_PortalScreen} options={{ headerShown : false }} />
         <Stack.Screen name='Dropdown' component={DropdownMenu} />
         <Stack.Screen name='myreferral' component={MyReferrals} options={{ headerShown : false }} />
-        <Stack.Screen name='interactivedeveloper' component={InteractiveDeveloper} options={{ headerShown : false }} />
+        <Stack.Screen name='InteractiveDeveloper' component={InteractiveDeveloper} options={{ headerShown : false }} />
         <Stack.Screen name='InterviewPanel' component={InterviewPanel} options={{ headerShown : false }} />
         <Stack.Screen name='MoreDetails' component={MoreDetails} options={{ headerShown : false }} />
         <Stack.Screen name='SideMenu' component={SideMenu} options={{ headerShown : false }} />
@@ -42,7 +42,7 @@ const App = () => {
         <Stack.Screen name='DateTime' component={TimeandDate} options={{ headerShown: false }} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen name='ProductListing' component={ProductListingScreen} />
-        <Stack.Screen name='ProductDetail' component={ProductDetailScreen} />
+        <Stack.Screen name='JobDetail' component={JobDetails} />
       </Stack.Navigator>
     </NavigationContainer>
   );

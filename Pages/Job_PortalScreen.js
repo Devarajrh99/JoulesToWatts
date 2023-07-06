@@ -1,16 +1,41 @@
-import React from 'react';
-import { Text, StyleSheet, TouchableOpacity, View, ScrollView, ImageBackground, Dimensions} from 'react-native';
+import React, { useState } from 'react';
+import { Text, StyleSheet, TouchableOpacity, View, FlatList, ScrollView, ImageBackground, Dimensions} from 'react-native';
 
 import Header from './Header';
 import Footer from './Footer';
 import MenuBar from './SideMenu';
 import FilterBy from './Filter';
 import DateTime from './TimeandDate';
-
-
 import SearchBox from './SearchBox';
 
 const Job_portal = ({ navigation }) => {
+
+
+    const [Jobs, setJobs] = useState([
+        { id: 1, title: 'Interactive Developer', description: 'Interactive Developer', skill01 : 'JavaScript', skill02 : 'node.js', experience : '4 Years', location : 'Delhi', salary : '4 to 6', eligibility : 'Interactive developer' },
+        { id: 2, title: 'Technical Support Engineer', description: 'bpo', skill01 : 'Excellent Communication Skill Working with US Client', experience : 'Fresher/ Experience Years', location : 'Bangalore', salary : '1.5 to 2.3', eligibility : 'bpo' },
+        { id: 3, title: 'Technical Support Engineer', description: 'Excellent understanding of the technical fundamentals of the Internet. You should have a solid knowledge of internet protocols such as SSH, FTP, SFTP & HTTP,The ability to be a good listener, and to really understand a customer problem or question and help them solve it. Excellent writing skills. Most of your work will be written (email, documentation, etc.). Excellent telephone mannerisms. Some support will be provided over the phone (via our VoIP system) 2-3 years previous experience in a technical support role', skill01 : 'Should have  above 65% in acadamic', skill02 : 'Good programming language', experience : 'Fresher / 2 Years', location : 'Bangalore', salary : '1.5 to 5.4', eligibility : 'Helping customers solve technical issues with our widgets. Answering questions from customers and prospective customers about the features and capabilities of our widgets. Developing customer-facing documentation for our website on an as-needed basis. Communicating customer needs and wishes to our development and engineering staff.' },
+      ]);
+    
+      const handleJobPress = (jobs) => {
+        navigation.navigate('JobDetail', { jobs });
+      };
+    
+      const renderJobItem = ({ item }) => (
+        <View style={[styles.card, styles.elevation]}>
+        <TouchableOpacity
+          style={styles.jobdItem}
+          onPress={() => handleJobPress(item)}
+        >
+          <Text style={styles.heading01}>{item.title}</Text>
+          <Text style={styles.heading02}>{item.description}</Text>
+          <View style={{flexDirection : 'row', width : '80%', justifyContent : 'space-around'}}>
+          <Text style={styles.button01}><Text style={styles.text}>{item.skill01}</Text></Text>
+          <Text style={styles.button01}><Text style={styles.text}>{item.skill02}</Text></Text>
+          </View>
+        </TouchableOpacity>
+        </View>
+      );
 
 
    const logout = () =>{
@@ -52,7 +77,13 @@ const Job_portal = ({ navigation }) => {
             
             </View>
 
-            <View style={[styles.card, styles.elevation]}> 
+            <FlatList scrollEnabled = {false}
+        data={Jobs}
+        renderItem={renderJobItem}
+        keyExtractor={(item) => item.id.toString()}
+      />
+
+            {/* <View style={[styles.card, styles.elevation]}> 
                 <TouchableOpacity onPress={() => navigation.navigate('interactivedeveloper')}>
                 <Text style={styles.heading01}>Interactive Developer</Text>
                 <Text style={styles.heading02}>Interactive Developer</Text>
@@ -155,7 +186,7 @@ const Job_portal = ({ navigation }) => {
                 <Text style={styles.button01}><Text style={styles.text}>Core java</Text></Text>
                 </View>
                 </TouchableOpacity>
-            </View>
+            </View> */}
 
             <Footer />
         </ScrollView>

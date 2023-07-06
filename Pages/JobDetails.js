@@ -4,8 +4,8 @@ import { View, Text, StyleSheet, Switch, TextInput, TouchableOpacity, ScrollView
 import Header from './Header';
 import Footer from './Footer';
 
-const ProductDetailScreen = ({ route, navigation }) => {
-  const { product } = route.params;
+const JobDetailScreen = ({ route, navigation }) => {
+  const { jobs } = route.params;
 
   const [isSwitchOn, setIsSwitchOn] = useState(false);
 
@@ -41,31 +41,31 @@ const ProductDetailScreen = ({ route, navigation }) => {
     <View style={styles.container}>
         <ScrollView>
         <Header />
-      <Text style={styles.texthead}>{product.title}</Text>
+      <Text style={styles.texthead}>{jobs.title}</Text>
       <Text style={styles.text}>Job created on 23 August</Text>
       <Text style={styles.texthead}>Description</Text>
-      <Text style={styles.text}>{product.description}</Text>
+      <Text style={styles.text}>{jobs.description}</Text>
       <View style={styles.line} />
       <Text style={styles.texthead}>Experience</Text>
-      <Text style={styles.text}>{product.experience}</Text>
+      <Text style={styles.text}>{jobs.experience}</Text>
       <View style={styles.line} />
       <Text style={styles.texthead}>Location</Text>
-      <Text style={styles.text}>{product.location}</Text>
+      <Text style={styles.text}>{jobs.location}</Text>
       <View style={styles.line} />
       <Text style={styles.texthead}>Salary</Text>
-      <Text style={styles.text}>{product.salary}</Text>
+      <Text style={styles.text}>{jobs.salary}</Text>
       <View style={styles.line} />
       <View style={{flexDirection : 'row', width : '70%', justifyContent : 'center', alignSelf : 'center', marginTop : '5%'}}>
       <View style={{flexDirection : 'column', width : '55%', justifyContent : 'space-between'}}>
       <Text style={styles.texthead}>Eligibility</Text>
-      <Text style={styles.text}>{`\u25CF ${product.eligibility}`}</Text>
+      <Text style={styles.text}>{`\u25CF ${jobs.eligibility}`}</Text>
       </View>
       <View style={styles.verticleLine}/>
       <View style={{flexDirection : 'column', width : '60%', justifyContent : 'space-between'}}>
       <Text style={styles.texthead}>Skills</Text>
       <View style={{flexDirection : 'row', marginRight : '10%', justifyContent : 'center'}}>
-      <Text style={styles.button02}><Text style={styles.skilltext}>{product.skill01}</Text></Text>
-      <Text style={styles.button02}><Text style={styles.skilltext}>{product.skill01}</Text></Text>
+      <Text style={styles.button02}><Text style={styles.skilltext}>{jobs.skill01}</Text></Text>
+      <Text style={styles.button02}><Text style={styles.skilltext}>{jobs.skill01}</Text></Text>
       </View>
       </View>
       </View>
@@ -226,4 +226,4 @@ submittext : {
 },
 });
 
-export default ProductDetailScreen;
+export default JobDetailScreen;
