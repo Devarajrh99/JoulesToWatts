@@ -89,13 +89,13 @@ const styles = StyleSheet.create({
         fontSize : 20,
         marginLeft : '10%',
         marginTop : '10%',
-        marginRight : '10%'
+        // marginRight : '10%'
     },
     descriptiontext : {
         color : 'black',
         fontSize : 15,
         marginLeft : '10%',
-        marginRight : '10%',
+        // marginRight : '10%',
         marginTop : '2%',
     },
     line : {
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
         backgroundColor : '#5f9ea0',
         borderRadius : 5,
         marginBottom : '15%',
-        padding : 5,
+        padding : 2,
       }
 })
 

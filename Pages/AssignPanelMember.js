@@ -140,12 +140,16 @@ const SideMenu = () => {
           </TouchableWithoutFeedback>
   
           <Animated.View style={[styles.sideMenu, { transform: [{ translateX: menuTranslateX }] }]}>
+            <View style={{ flexDirection : 'row', justifyContent : 'space-between' }}>
+              <Text style={styles.heading}>Select Your Availability</Text>
             <TouchableOpacity onPress={toggleMenu} style={styles.closeButton}>
-              <Text style = {styles.text}>Close Menu</Text>
+              <Text style = {styles.closetext}>Cancel</Text>
             </TouchableOpacity>
+            </View>
 
             <View style={styles.inputContainer}>
             <View style={{flexDirection : 'column'}}>
+            <Text style={styles.texthead}>Select Date</Text>
               <View style={{flexDirection : 'row', width : '90%', justifyContent : 'space-around'}}>
         <TextInput
           style={styles.manualInput}
@@ -160,11 +164,13 @@ const SideMenu = () => {
         </TouchableOpacity>
         </View>
 
-        <View style={{ flexDirection : 'row', width : '60%', justifyContent : 'space-between' }}>
+        <View style={{ flexDirection : 'row', width : '65%', justifyContent : 'space-between' }}>
+        <View style={{ flexDirection : 'column' }}>
+        <Text style={styles.texthead}>Select From Time</Text>
         <View style={{flexDirection : 'row', width : '80%', justifyContent : 'space-evenly'}}>
         <TextInput
           style={styles.manualInput}
-          placeholder="From Time (HH:MM)"
+          placeholder="00:00"
           placeholderTextColor={'black'}
           value={manualFromTime}
           onChangeText={setManualFromTime}
@@ -175,11 +181,14 @@ const SideMenu = () => {
           <Text style={styles.pickButtonText}>Time</Text>
         </TouchableOpacity>
         </View>
+        </View>
 
-        <View style={{flexDirection : 'row', width : '70%', justifyContent : 'space-evenly'}}>
+        <View style={{ flexDirection : 'column' }}>
+        <Text style={styles.texthead}>Select To Time</Text>
+        <View style={{flexDirection : 'row', width : '80%', justifyContent : 'space-evenly'}}>
         <TextInput
           style={styles.manualInput}
-          placeholder="To Time (HH:MM)"
+          placeholder="00:00"
           placeholderTextColor={'black'}
           value={manualToTime}
           onChangeText={setManualToTime}
@@ -189,6 +198,7 @@ const SideMenu = () => {
         <TouchableOpacity style={styles.pickButton} onPress={showToTimePicker}>
           <Text style={styles.pickButtonText}>Time</Text>
         </TouchableOpacity>
+        </View>
         </View>
         </View>
         </View>
@@ -244,20 +254,28 @@ const SideMenu = () => {
     sideMenu: {
       position: 'absolute',
       top: '30%',
-      width: '70%',
+      width: '80%',
       height: '50%',
       backgroundColor: '#ffffff',
       padding: 16,
       borderRadius : 5,
       alignSelf : 'center',
     },
-    closeButton: {
-      marginBottom: 16,
-      padding: 8,
-      backgroundColor: 'white',
+    heading : {
+      color : 'gray',
+      // fontWeight : 'bold',
+      fontSize : 18,
+    },
+    closetext : {
+      color : 'black',
+    },
+    texthead : {
+      color : 'black',
+      fontWeight : 'bold',
+      marginTop : '10%',
     },
     text : {
-        color : 'black',
+        color : '#fff',
         alignContent : 'center',
     },
     sidetext : {
@@ -274,8 +292,8 @@ const SideMenu = () => {
       borderWidth: 1,
       borderColor: 'black',
       borderRadius: 4,
-      padding: 10,
-      flex: 1,
+      padding: 8,
+      // flex: 1,
       color : 'black',
       alignSelf : 'center',
     },
@@ -284,16 +302,11 @@ const SideMenu = () => {
       padding: 5,
       borderRadius: 4,
       alignSelf : 'center',
+      marginLeft : '5%'
     },
     pickButtonText: {
       color: 'white',
       fontWeight: 'bold',
-    },
-    selectedDateText: {
-      marginTop: 10,
-      fontSize: 18,
-      fontWeight: 'bold',
-      color: 'black',
     },
       selectedTimeText: {
       marginTop: 10,

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Modal, TouchableWithoutFeedback, Animated } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Modal, TouchableWithoutFeedback, Animated, Image } from 'react-native';
 
 
-const SideMenu = ({ interviewpanel, jobportal, sparsh }) => {
+const ProfileScreen = ({ logout }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const animatedValue = new Animated.Value(0);
   
@@ -31,8 +31,10 @@ const SideMenu = ({ interviewpanel, jobportal, sparsh }) => {
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={toggleMenu} style={styles.menuButton}>
-          <Text style = {styles.text}>Menu</Text>
-          {/* <FontAwesomeIcon icon={faBars} style={styles.icon} /> */}
+            <View style={{flexDirection : 'row', width : '50%', justifyContent : 'space-around'}} >
+        <Image style={styles.profileImage} source={require('./Images/profile.png')} />
+          <Text style = {styles.text}>Profile</Text>
+          </View>
         </TouchableOpacity>
   
         <Modal visible={isMenuOpen} transparent animationType="fade">
@@ -44,22 +46,13 @@ const SideMenu = ({ interviewpanel, jobportal, sparsh }) => {
             <TouchableOpacity onPress={toggleMenu} style={styles.closeButton}>
               <Text style = {styles.text}>Close Menu</Text>
             </TouchableOpacity>
-
-            <Text style = {styles.sidetext}>Home</Text>  
-            <TouchableOpacity onPress={jobportal}>
-            <Text style = {styles.sidetext}>Job Portal</Text>
-              </TouchableOpacity>
-            <TouchableOpacity onPress={interviewpanel}>
-            <Text style = {styles.sidetext}>Interview Panel</Text>
+  
+            <Text style = {styles.text}>Edit Profile</Text>
+            <TouchableOpacity onPress={logout} >
+                <Text style={styles.text}>LogOut</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={sparsh}>
-            <Text style = {styles.sidetext}>Sparsh</Text>
-            </TouchableOpacity>
-            {/* Add more menu items as needed */}
           </Animated.View>
         </Modal>
-  
-        {/* Rest of the content of your Home Screen */}
       </View>
     );
   };
@@ -70,8 +63,13 @@ const SideMenu = ({ interviewpanel, jobportal, sparsh }) => {
       justifyContent: 'center',
       alignItems: 'center',
     },
+    profileImage: {
+        width: 30,
+        height: 30,
+        marginRight: 5,
+      },
     menuButton: {
-    //   paddingHorizontal: 16,
+      paddingHorizontal: 16,
       paddingVertical: 8,
       backgroundColor: 'white',
     },
@@ -82,9 +80,9 @@ const SideMenu = ({ interviewpanel, jobportal, sparsh }) => {
     sideMenu: {
       position: 'absolute',
       top: 0,
-      left: 0,
-      width: '60%',
-      height: '100%',
+      right : 0,
+      width: '50%',
+      height: '50%',
       backgroundColor: '#ffffff',
       padding: 16,
       borderRadius : 5,
@@ -96,15 +94,9 @@ const SideMenu = ({ interviewpanel, jobportal, sparsh }) => {
     },
     text : {
         color : 'black',
-        alignContent : 'center',
+        alignContent : 'center'
     },
-    sidetext : {
-      color : 'black',
-      alignContent : 'center',
-      marginBottom : 20,
-      marginLeft : '8%',
-    }
   });
   
-  export default SideMenu;
+  export default ProfileScreen;
   
