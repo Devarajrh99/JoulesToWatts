@@ -19,8 +19,6 @@ const LoginScreen = ({ navigation }) => {
       <Text style={styles.texthead05}>Enter Your Email ID / Mobile Number<Text style={styles.textinput01}>*</Text></Text>
       <TextInput style={styles.textinput} placeholder='Enter your gmail/Mobile no.' keyboardType = 'numeric' maxLength={10} placeholderTextColor = 'gray'></TextInput>
       <View style = {{ flexDirection : 'row', width:'80%', justifyContent:'space-around'}}>
-      {/* <Button title = 'Send OTP' color="#74C497" style = {styles.button} onPress={() => Alert.alert('OTP sent')} />
-      <Button title = 'Reset' color="#74C497" style = {styles.button} ></Button> */}
       <TouchableOpacity style={styles.button01} onPress={() => navigation.navigate('Otp') }>
         <Text style={styles.buttonText}>Send OTP</Text>
       </TouchableOpacity>
@@ -42,14 +40,11 @@ const styles = StyleSheet.create({
     backgroundColor : 'white',
   },
   texthead01 : {
-    // alignContent : 'center',
     color:'black',
     fontSize : 40,
-    // marginTop:40,
     marginLeft : '10%',
     marginBottom : 20,
     marginTop : '10%',
-    // textAlign:'center'
   },
   texthead02 : {
     marginLeft : '10%',
@@ -74,7 +69,6 @@ const styles = StyleSheet.create({
   },
   textinput : {
     height : 40,
-    // width : 300,
     borderWidth : 1,
     color : 'black',
     borderRadius:5,
@@ -104,7 +98,6 @@ const styles = StyleSheet.create({
   button01: {
     marginLeft: '10%',
     padding: 10,
-    // width : 120,
     backgroundColor: '#75C597',
     borderRadius: 5,
     marginBottom : 20,

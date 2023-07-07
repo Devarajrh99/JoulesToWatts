@@ -47,16 +47,6 @@ const MyPage = () => {
     navigation.navigate('Sparsh');
   };
 
-  // useEffect(() => {
-  //   if (flashVisible) {
-  //     const timer = setTimeout(() => {
-  //       setFlashVisible(false);
-  //     }, 3000);
-
-  //     return () => clearTimeout(timer);
-  //   }
-  // }, [flashVisible]);
-
   return (
     
       <View style={styles.container}>
@@ -79,7 +69,7 @@ const MyPage = () => {
           onChangeText={handleTitleChange}
           value={title}
           placeholder="Enter title"
-          placeholderTextColor={'black'}
+          placeholderTextColor={'#808080'}
         />
 
         <Text style={styles.descriptionHeading}>
@@ -91,7 +81,7 @@ const MyPage = () => {
           onChangeText={handleDescriptionChange}
           value={description}
           placeholder="Enter description (max 500 characters)"
-          placeholderTextColor={'black'}
+          placeholderTextColor={'#808080'}
           maxLength={500}
         />
 
@@ -179,7 +169,7 @@ const styles = StyleSheet.create({
   button: {
     width: '48%',
     height: 40,
-    backgroundColor: '#87CEEB',
+    backgroundColor: '#5f9ea0',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,

@@ -1,16 +1,40 @@
 import React from "react";
-import { View, StyleSheet, Text, TouchableOpacity, ImageBackground, Dimensions, ScrollView } from 'react-native';
+import { View, StyleSheet, Text, ImageBackground, Dimensions, ScrollView } from 'react-native';
 
 import Header from "./Header";
 import Footer from "./Footer";
+import MenuBar from './SideMenu';
 import AssignPanelMember from './AssignPanelMember';
 
-const MoreDetails = () => {
+const MoreDetails = ({ route }) => {
+
+const { jobs } = route.params;
+
+
+const logout = () =>{
+    navigation.navigate('Login')
+    }
+
+    const interviewpanel = () =>{
+        navigation.navigate('InterviewPanel')
+    }
+
+    const jobportal = () => {
+        navigation.navigate('Job_Portal')
+    }
+
+    const sparsh = () => {
+        navigation.navigate('Sparsh')
+    }
+
+
     return (
         <View style={styles.container}>
-            <ScrollView>
-            <Header />
-
+            <ScrollView contentContainerStyle={styles.scrollContainer}>
+            <View style={{flexDirection : 'row', width : '80%'}}>
+                <MenuBar interviewpanel={interviewpanel} home={jobportal} sparsh={sparsh} />
+                <Header logout={logout} />
+                </View>
             <ImageBackground style={styles.background} source={require('./Images/background.png')}>
                 <View style={{ flexDirection : 'row', marginRight : '5%'}}>
                 <View style={{ flex : 0.7 }}>
@@ -26,24 +50,35 @@ const MoreDetails = () => {
                 </View>
             </ImageBackground>
 
+
             <Text style={styles.texthead}>Job Description</Text>
-            <Text style={styles.descriptiontext}>Interactive developer</Text>
+            <Text style={styles.descriptiontext}>{jobs.description}</Text>
             <View style={styles.line} />
-            <View style={{ flexDirection : 'row', width : '75%', justifyContent : 'space-between', marginLeft : '7%', marginRight : '8%' }}>
+            <View style={{ flexDirection : 'row', width : '50%', justifyContent : 'space-between', marginLeft : '7%', marginRight : '8%' }}>
                 <View style={{ flexDirection : 'column' }}>
+                    {/* <View style={{ flex : 0.5 }}> */}
             <Text style={styles.texthead}>Eligibility</Text>
-            <Text style={styles.descriptiontext}>Interactive developer</Text>
+            <Text style={styles.descriptiontext}>{jobs.eligibility}</Text>
+            {/* </View> */}
             </View>
             <View style={styles.verticleLine}></View>
             <View style = {{ flexDirection : 'column' }}>
+            <View style={{ flex : 0.5 }}>
                 <Text style={styles.texthead}>Skills</Text>
-                <View style={{ flexDirection : 'row', width : '60%', justifyContent : 'space-around', marginLeft : '5%', marginRight : '5%' }}>
-                    <Text style={styles.skilltext}>JavaScript</Text>
-                    <Text style={styles.skilltext}>node.js</Text>
+                <View style={{ flexDirection : 'row', width : '60%', justifyContent : 'space-between', marginLeft : '5%', marginRight : '5%' }}>
+                    <View style={{ flex : 0.5 }}>
+                    <Text style={styles.skilltext}>{jobs.skill01}</Text>
+                    </View>
+                    <View style={{ flex : 0.5 }}>
+                    <Text style={styles.skilltext}>{jobs.skill02}</Text>
+                    </View>
+                    </View>
                 </View>
             </View>
             </View>
+            <View style={styles.footer}>
             <Footer />
+            </View>
             </ScrollView>
         </View>
     )
@@ -89,14 +124,14 @@ const styles = StyleSheet.create({
         fontSize : 20,
         marginLeft : '10%',
         marginTop : '10%',
-        // marginRight : '10%'
     },
     descriptiontext : {
         color : 'black',
         fontSize : 15,
         marginLeft : '10%',
-        // marginRight : '10%',
         marginTop : '2%',
+        marginRight : '10%',
+        textAlign : 'justify'
     },
     line : {
         borderBottomColor : 'black',
@@ -117,7 +152,19 @@ const styles = StyleSheet.create({
         borderRadius : 5,
         marginBottom : '15%',
         padding : 2,
-      }
+      },
+      footer : {
+        position : 'absolute',
+        bottom : 0,
+        left : 0,
+        right : 0,
+        justifyContent : 'center',
+        alignItems : 'center',
+      },
+      scrollContainer: {
+        flexGrow: 1,
+        paddingBottom: 120
+      },
 })
 
 export default MoreDetails;

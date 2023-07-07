@@ -1,11 +1,50 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Switch, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Switch, TextInput, Alert, TouchableOpacity, ScrollView } from 'react-native';
 
 import Header from './Header';
 import Footer from './Footer';
+import MenuBar from './SideMenu';
 
 const JobDetailScreen = ({ route, navigation }) => {
   const { jobs } = route.params;
+
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+
+  const validateEmail = () => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    if (emailRegex.test(email)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const validatePhoneNumber = () => {
+    const phoneRegex = /^[0-9]{10}$/;
+
+    if (phoneRegex.test(phoneNumber)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const validateInput = () => {
+    const isEmailValid = validateEmail();
+    const isPhoneNumberValid = validatePhoneNumber();
+
+    if (isEmailValid && isPhoneNumberValid) {
+    } else if (!isEmailValid && !isPhoneNumberValid) {
+      Alert.alert('Invalid Input', 'Please enter a valid email address and 10-digit phone number.');
+    } else if (!isEmailValid) {
+      Alert.alert('Invalid Email', 'Please enter a valid email address.');
+    } else {
+      Alert.alert('Invalid Phone Number', 'Please enter a valid 10-digit phone number.');
+    }
+  };
+  
 
   const [isSwitchOn, setIsSwitchOn] = useState(false);
 
@@ -37,10 +76,29 @@ const JobDetailScreen = ({ route, navigation }) => {
       }
     };
 
+    const logout = () =>{
+      navigation.navigate('Login')
+      }
+  
+      const interviewpanel = () =>{
+          navigation.navigate('InterviewPanel')
+      }
+  
+      const jobportal = () => {
+          navigation.navigate('Job_Portal')
+      }
+  
+      const sparsh = () => {
+          navigation.navigate('Sparsh')
+      }
+
   return (
     <View style={styles.container}>
-        <ScrollView>
-        <Header />
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <View style={{flexDirection : 'row', width : '80%'}}>
+                <MenuBar interviewpanel={interviewpanel} jobportal={jobportal} sparsh={sparsh} />
+                <Header logout={logout} />
+                </View>
       <Text style={styles.texthead}>{jobs.title}</Text>
       <Text style={styles.text}>Job created on 23 August</Text>
       <Text style={styles.texthead}>Description</Text>
@@ -63,7 +121,7 @@ const JobDetailScreen = ({ route, navigation }) => {
       <View style={styles.verticleLine}/>
       <View style={{flexDirection : 'column', width : '60%', justifyContent : 'space-between'}}>
       <Text style={styles.texthead}>Skills</Text>
-      <View style={{flexDirection : 'row', marginRight : '10%', justifyContent : 'center'}}>
+      <View style={{flexDirection : 'row', marginRight : '10%', justifyContent : 'flex-start'}}>
       <Text style={styles.button02}><Text style={styles.skilltext}>{jobs.skill01}</Text></Text>
       <Text style={styles.button02}><Text style={styles.skilltext}>{jobs.skill01}</Text></Text>
       </View>
@@ -84,21 +142,35 @@ const JobDetailScreen = ({ route, navigation }) => {
             <View style={{flexDirection : 'row', width : '78%', justifyContent : 'center', marginLeft : '10%', marginRight : '10%'}}>
                 <View style={{flexDirection : 'column', width : '55%', justifyContent : 'space-between'}}>
                 <Text style={styles.text}>Application name<Text style={styles.require}>*</Text></Text>
-                <TextInput style={styles.inputtext} />
+                <TextInput style={styles.inputtext} 
+                placeholder='Enter your name' 
+                placeholderTextColor='#808080' />
                 </View>
                 <View style={{flexDirection : 'column', width : '55%', justifyContent : 'space-between'}}>
                 <Text style={styles.text}>Application Email id<Text style={styles.require}>*</Text></Text>
-                <TextInput style={styles.inputtext} />
+                <TextInput style={styles.inputtext} 
+                placeholder='Enter your email' 
+                placeholderTextColor='#808080'
+                value={email}
+                onChangeText={(text) => setEmail(text)} />
                 </View>
             </View>
             <View style={{flexDirection : 'row', width : '78%', justifyContent : 'center', marginLeft : '10%', marginRight : '10%'}}>
                 <View style={{flexDirection : 'column', width : '55%', justifyContent : 'space-between'}}>
                 <Text style={styles.text}>Applicant Mobile number<Text style={styles.require}>*</Text></Text>
-                <TextInput style={styles.inputtext} />
+                <TextInput style={styles.inputtext} 
+                placeholder='Enter your mobile number' 
+                placeholderTextColor='#808080'
+                value={phoneNumber}
+                onChangeText={(text) => setPhoneNumber(text)}
+                keyboardType='numeric'
+                maxLength={10} />
                 </View>
                 <View style={{flexDirection : 'column', width : '55%', justifyContent : 'space-between'}}>
                 <Text style={styles.text}>Applicant total experience<Text style={styles.require}>*</Text></Text>
-                <TextInput style={styles.inputtext} />
+                <TextInput style={styles.inputtext} 
+                placeholder='Total Experience' 
+                placeholderTextColor='#808080' />
                 </View>
             </View>
 
@@ -110,10 +182,12 @@ const JobDetailScreen = ({ route, navigation }) => {
             </View>    
     
 
-            <TouchableOpacity style={styles.submitbutton}>
+            <TouchableOpacity style={styles.submitbutton} onPress={validateInput}>
                 <Text style={styles.submittext}>Apply Now</Text>
             </TouchableOpacity>
+            <View style={styles.footer}>
             <Footer />
+            </View>
       </ScrollView>
     </View>
   );
@@ -122,7 +196,7 @@ const JobDetailScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    // padding: 10,
     backgroundColor : '#fff'
   },
   texthead : {
@@ -136,6 +210,7 @@ text : {
     color : 'black',
     marginLeft : '10%',
     marginRight : '10%',
+    textAlign : 'justify'
 },
 line : {
     borderBottomColor : 'black',
@@ -151,11 +226,9 @@ verticleLine: {
   },
   button02 : {
     backgroundColor : 'lightblue',
-    marginLeft : 20,
-    marginBottom : 12,
+    marginLeft : '5%',
     borderRadius : 10,
-    paddingHorizontal : 10,
-    paddingVertical : 3,
+    padding : 5,
 },
 skilltext : {
     color : 'black',
@@ -183,6 +256,7 @@ inputtext : {
     marginLeft : '10%',
     marginBottom : '10%',
     borderRadius : 4,
+    color : 'black'
 },
 attachbutton : {
     alignSelf : 'center',
@@ -223,6 +297,18 @@ submitbutton : {
 submittext : {
     color : '#fff',
     alignSelf : 'center',
+},
+footer : {
+  position : 'absolute',
+  bottom : 0,
+  left : 0,
+  right : 0,
+  justifyContent : 'center',
+  alignItems : 'center',
+},
+scrollContainer: {
+  flexGrow: 1,
+  paddingBottom: 120,
 },
 });
 

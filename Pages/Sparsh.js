@@ -1,27 +1,16 @@
 import React, { useState } from 'react';
-import { StyleSheet, ImageBackground, Modal, Pressable,  useWindowDimensions , Picker, SafeAreaView, TouchableHighlight, Text, View, TextInput, Image, TouchableOpacity, ScrollView } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
+import { StyleSheet, ImageBackground, Modal, Pressable,  useWindowDimensions, Text, View, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 // import { RadioButton } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMugSaucer } from '@fortawesome/free-solid-svg-icons/faMugSaucer'
-import { AntDesign } from '@expo/vector-icons'; // for Instagram icon
-import { Feather } from '@expo/vector-icons';
 import { MultipleSelectList } from 'react-native-dropdown-select-list';
-import { SelectList } from 'react-native-dropdown-select-list'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { FaSearch } from 'react-icons/fa';
-import { IonItem, IonList, IonSelect, IonSelectOption } from '@ionic/react';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { TabView, SceneMap } from 'react-native-tab-view';
-import { TouchableWithoutFeedback} from 'react-native'
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Header from './Header';
 import Footer from './Footer';
 import SideMenu from './SideMenu';
+import MenuBar from './SideMenu'
 
 const Sparsh = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -80,13 +69,29 @@ const Sparsh = ({ navigation }) => {
     { key: 'second', title: 'Closed Ticket' },
   ]);
 
+  const logout = () =>{
+    navigation.navigate('Login')
+    }
+
+    const interviewpanel = () =>{
+        navigation.navigate('InterviewPanel')
+    }
+
+    const jobportal = () => {
+        navigation.navigate('Job_Portal')
+    }
+
+    const sparsh = () => {
+        navigation.navigate('Sparsh')
+    }
+
   return (
     <View style={styles.container}>
       <ScrollView>
-        <View style={{flexDirection : 'row', width : '80%' }}>
-          <SideMenu />
-        <Header />
-        </View>
+      <View style={{flexDirection : 'row', width : '80%'}}>
+                <MenuBar interviewpanel={interviewpanel} jobportal={jobportal} sparsh={sparsh} />
+                <Header logout={logout} />
+                </View>
         <ImageBackground
           source={require('./Images/background.png')}
           style={styles.backgroundImage}
@@ -122,27 +127,6 @@ const Sparsh = ({ navigation }) => {
   }}>
                 <View style={styles.centeredView}>
                   <View style={styles.modalView} >
-                  {/* <RadioButton.Group onValueChange={value => setPriority(value)} value={priority}>
-                  <View style={styles.radioItem}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <RadioButton color="red" value="high" />
-                      <Text style={[styles.modalText, { color: 'red' }]}>High Priority</Text>
-                    </View>
-                  </View>
-                  <View style={styles.radioItem}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <RadioButton color="orange" value="medium" />
-                      <Text style={[styles.modalText, { color: 'orange' }]}>Medium Priority</Text>
-                    </View>
-                  </View>
-                  <View style={styles.radioItem}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <RadioButton color="#3590ae" value="low" />
-                      <Text style={[styles.modalText, { color: '#3590ae' }]}>Low Priority</Text>
-                    </View>
-                  </View>
-                </RadioButton.Group> */}
-
                     <Pressable
                       style={[styles.button, styles.buttonClose]}
                       onPress={() => setModalVisible(!modalVisible)}>
@@ -175,7 +159,6 @@ const Sparsh = ({ navigation }) => {
                             <Text style={[styles.buttonText3, { marginRight: 100 } ] }>Select Date and Time</Text>
                             <Icon name='chevron-down' size={15} color='#000' />
                           </TouchableOpacity>
-                          {/* {[styles.textStyle, { marginRight: 28 }]} */}
 
                           <DateTimePickerModal
                             isVisible={isDatePickerVisible}
@@ -249,7 +232,7 @@ const styles = StyleSheet.create({
     color : 'white',
     marginLeft : 150,
     borderRadius : 10,
-    backgroundColor :'#87CEEB',
+    backgroundColor :'#5f9ea0',
     padding : 10,
     fontWeight: 'bold',
     textAlign : 'center',

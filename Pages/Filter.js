@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Modal, StyleSheet, TextInput } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+// import { AntDesign } from '@expo/vector-icons';
 
 const Filter = () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedExperience, setSelectedExperience] = useState('');
   const [selectedSalary, setSelectedSalary] = useState('');
   const [location, setLocation] = useState('');
+
+  const [number, setNumber] = useState(0);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -28,6 +31,23 @@ const Filter = () => {
     toggleModal();
   };
 
+  const handleIncrement = () => {
+    setNumber(number + 1);
+  };
+
+  const handleDecrement = () => {
+    if (number > 0) {
+      setNumber(number - 1);
+    }
+  };
+
+  const handleTextChange = (text) => {
+    // Ensure only numeric input is allowed
+    if (/^\d*$/.test(text)) {
+      setNumber(parseInt(text));
+    }
+  };
+
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.filterButton} onPress={toggleModal}>
@@ -44,6 +64,19 @@ const Filter = () => {
               </TouchableOpacity>
             </View>
             <Text style={styles.texthead}>Experience</Text>
+
+            {/* <TouchableOpacity style={styles.button} onPress={handleDecrement}>
+        <AntDesign name="caretleft" size={20} color="black" />
+      </TouchableOpacity>
+      <TextInput
+        style={styles.input}
+        value={number.toString()}
+        onChangeText={handleTextChange}
+        keyboardType="numeric"
+      />
+      <TouchableOpacity style={styles.button} onPress={handleIncrement}>
+        <AntDesign name="caretright" size={20} color="black" />
+      </TouchableOpacity> */}
             <Picker
               selectedValue={selectedExperience}
               style={styles.picker}
@@ -51,8 +84,9 @@ const Filter = () => {
             >
               <Picker.Item label="Select experience" value="" />
               <Picker.Item label="1-2 years" value="1-2 years" />
-              <Picker.Item label="3-5 years" value="3-5 years" />
-              <Picker.Item label="6-10 years" value="6-10 years" />
+              <Picker.Item label="2-5 years" value="2-5 years" />
+              <Picker.Item label="5-10 years" value="5-10 years" />
+              <Picker.Item label="10+ years" value="10+ years" />
             </Picker>
 
             <Text style={styles.texthead}>Salary</Text>
@@ -62,9 +96,13 @@ const Filter = () => {
               onValueChange={(itemValue) => setSelectedSalary(itemValue)}
             >
               <Picker.Item label="Select salary" value="" />
-              <Picker.Item label="< $5000" value="< $5000" />
-              <Picker.Item label="$5000 - $10000" value="$5000 - $10000" />
-              <Picker.Item label="> $10000" value="> $10000" />
+              <Picker.Item label='>3 LPA' value='>3 LPA' />
+              <Picker.Item label="3-5 LPA" value="3-5 LPA" />
+              <Picker.Item label="5-8 LPA" value="5-8 LPA" />
+              <Picker.Item label="8-10 LPA" value="8-10 LPA" />
+              <Picker.Item label="10-12 LPA" value="10-12 LPA" />
+              <Picker.Item label="12-15 LPA" value="12-15 LPA" />
+              <Picker.Item label="15+ LPA" value="15+ LPA" />
             </Picker>
 
             <Text style={styles.texthead}>Location</Text>
@@ -125,7 +163,7 @@ const styles = StyleSheet.create({
   },
   picker : {
     color : 'black',
-    backgroundColor : '#C0C0C0',
+    backgroundColor : '#DCDCDC',
   },
   text : {
     color : 'black'
@@ -147,7 +185,26 @@ const styles = StyleSheet.create({
   },
   reset : {
     color : 'red'
-  }
+  },
+  button: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#808080',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color : 'black',
+  },
+  input: {
+    // flex: 1,
+    height: '10%',
+    marginLeft: 10,
+    borderWidth: 1,
+    borderColor: '#808080',
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    color : 'black',
+  },
 })
 
 export default Filter;
