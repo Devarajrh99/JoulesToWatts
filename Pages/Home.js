@@ -89,7 +89,7 @@ const Home = ({ navigation }) => {
                 <Text style={styles.texthead01}>Top 6 High Paying Panel Member Jobs</Text>
                 <Text style={styles.texthead02}>If you're looking to apply for a job, it's important to know which jobs are in high demand and frequently applied for. Here are the top 6 frequently applied jobs that you might want to consider:</Text>
 
-                <TouchableOpacity onPress={() => navigation.navigate('OpenTicket')}>
+                <TouchableOpacity style={styles.button01} onPress={() => navigation.navigate('OpenTicket')}>
                     <Text>Open Tickets</Text>
                 </TouchableOpacity>
 
