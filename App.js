@@ -16,6 +16,7 @@ import Sparsh from './Pages/Sparsh';
 import Ticket from './Pages/ticket';
 import Other from './Pages/Other';
 import JobDetails from './Pages/JobDetails';
+import OpenTicket from './Pages/OpenTickets';
 
 const Stack = createNativeStackNavigator();
 
@@ -37,6 +38,7 @@ const App = () => {
         <Stack.Screen name='ticket' component={Ticket} options={{ headerShown : false }} />
         <Stack.Screen name="Other" component={Other} options={{ headerShown : false }} />
         <Stack.Screen name='JobDetail' component={JobDetails} options={{ headerShown : false }} />
+        <Stack.Screen name='OpenTicket' component={OpenTicket} options={{ headerShown : false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
