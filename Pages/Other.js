@@ -1,62 +1,51 @@
-import React from 'react';
-import { View, FlatList, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-const orders = [
-  { id: 1, date: '2023-07-01', customer: 'John Doe', total: 100 },
-  { id: 2, date: '2023-07-02', customer: 'Jane Smith', total: 150 },
-  { id: 3, date: '2023-07-03', customer: 'Mike Johnson', total: 200 },
-  { id: 4, date: '2023-07-01', customer: 'John Doe', total: 100 },
-  { id: 5, date: '2023-07-02', customer: 'Jane Smith', total: 150 },
-  { id: 6, date: '2023-07-03', customer: 'Mike Johnson', total: 200 },
-  { id: 7, date: '2023-07-01', customer: 'John Doe', total: 100 },
-  { id: 8, date: '2023-07-02', customer: 'Jane Smith', total: 150 },
-  { id: 9, date: '2023-07-03', customer: 'Mike Johnson', total: 200 },
-  { id: 10, date: '2023-07-01', customer: 'John Doe', total: 100 },
-  { id: 12, date: '2023-07-02', customer: 'Jane Smith', total: 150 },
-  { id: 13, date: '2023-07-03', customer: 'Mike Johnson', total: 200 },
-  // Add more order data here...
-];
+const TabNavigation = () => {
+  const [activeTab, setActiveTab] = useState('Tab1');
 
-const OrderHistory = () => {
-  const renderOrderItem = ({ item }) => (
-    <View style={styles.row}>
-      <Text style={styles.cell}>{item.id}</Text>
-      <Text style={styles.cell}>{item.date}</Text>
-      <Text style={styles.cell}>{item.customer}</Text>
-      <Text style={styles.cell}>{item.total}</Text>
-    </View>
-  );
-
-  const renderCellContent = (value) => {
-    if (value.length > 10) {
-      return <Text>{value.substring(0, 10)}...</Text>;
-    }
-    return <Text>{value}</Text>;
+  const handleTabPress = (tabName) => {
+    setActiveTab(tabName);
   };
 
   return (
     <View style={styles.container}>
-      {/* Table Header */}
-      <View style={styles.headerRow}>
-        <Text style={styles.headerCell}>Order ID</Text>
-        <Text style={styles.headerCell}>Date</Text>
-        <Text style={styles.headerCell}>Customer</Text>
-        <Text style={styles.headerCell}>Total</Text>
+      <View style={styles.tabContainer}>
+        <TouchableOpacity
+          style={[styles.tabItem, activeTab === 'Tab1' && styles.activeTab]}
+          onPress={() => handleTabPress('Tab1')}
+        >
+          <Text style={styles.tabText}>Tab 1</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.tabItem, activeTab === 'Tab2' && styles.activeTab]}
+          onPress={() => handleTabPress('Tab2')}
+        >
+          <Text style={styles.tabText}>Tab 2</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.tabItem, activeTab === 'Tab3' && styles.activeTab]}
+          onPress={() => handleTabPress('Tab3')}
+        >
+          <Text style={styles.tabText}>Tab 3</Text>
+        </TouchableOpacity>
       </View>
 
-      {/* Order List */}
-      <FlatList
-        data={orders}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.row}>
-            <Text style={styles.cell}>{renderCellContent(item.id.toString())}</Text>
-            <Text style={styles.cell}>{renderCellContent(item.date)}</Text>
-            <Text style={styles.cell}>{renderCellContent(item.customer)}</Text>
-            <Text style={styles.cell}>{renderCellContent(item.total.toString())}</Text>
-          </View>
-        )}
-      />
+      {activeTab === 'Tab1' && (
+        <View>
+          <Text style={styles.text}>Content for Tab 1, Content for Tab 1, Content for Tab 1</Text>
+        </View>
+      )}
+      {activeTab === 'Tab2' && (
+        <View>
+          <Text style={styles.text}>Content for Tab 2</Text>
+        </View>
+      )}
+      {activeTab === 'Tab3' && (
+        <View>
+          <Text style={styles.text}>Content for Tab 3</Text>
+        </View>
+      )}
     </View>
   );
 };
@@ -64,34 +53,30 @@ const OrderHistory = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    padding: 20,
   },
-  headerRow: {
+  tabContainer: {
     flexDirection: 'row',
-    backgroundColor: '#f2f2f2',
-    paddingVertical: 10,
-    paddingHorizontal: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-    color : 'black',
+    justifyContent: 'space-between',
+    marginBottom: 20,
   },
-  headerCell: {
+  tabItem: {
     flex: 1,
+    alignItems: 'center',
+    paddingVertical: 10,
+    backgroundColor: '#808080',
+  },
+  activeTab: {
+    backgroundColor: 'red',
+  },
+  tabText: {
+    fontSize: 16,
     fontWeight: 'bold',
-    color : 'black'
-  },
-  row: {
-    flexDirection: 'row',
-    paddingVertical: 10,
-    paddingHorizontal: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
     color : 'black',
   },
-  cell: {
-    flex: 1,
-    color : 'black'
-  },
+  text : {
+    color : 'green',
+  }
 });
 
-export default OrderHistory;
+export default TabNavigation;

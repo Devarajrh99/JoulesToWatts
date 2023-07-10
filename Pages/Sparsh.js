@@ -16,6 +16,12 @@ const Sparsh = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [priority, setPriority] = useState('');
 
+  const [activeTab, setActiveTab] = useState('Tab1');
+
+  const handleTabPress = (tabName) => {
+    setActiveTab(tabName);
+  };
+
 
   const [selected, setSelected] = React.useState([]);
   
@@ -106,18 +112,18 @@ const Sparsh = ({ navigation }) => {
     </TouchableOpacity>
                   
               
-  <TabView
+  {/* <TabView
   navigationState={{ index, routes }}
   onIndexChange={setIndex}
   renderScene={SceneMap({
     first: FirstRoute,
     second: SecondRoute,
   })}
-/>
+/> */}
                   
                   
-<View style={styles.centeredView}>
-<Modal
+{/* <View style={styles.centeredView}> */}
+{/* <Modal
   animationType="slide"
   transparent={true}
   visible={modalVisible}
@@ -134,17 +140,17 @@ const Sparsh = ({ navigation }) => {
                     </Pressable>
                   </View>
                 </View>
-              </Modal>
-              <Pressable style={[styles.button, styles.buttonOpen]} onPress={() => setModalVisible(true)} >
+              </Modal> */}
+              {/* <Pressable style={[styles.button, styles.buttonOpen]} onPress={() => setModalVisible(true)} >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text style={[styles.textStyle, { marginRight: 150 }]}>Ticket Priority</Text>
                 <Icon name='chevron-down' size={15} color='#000' />
               </View>
-              </Pressable>
-            </View>
+              </Pressable> */}
+            {/* </View> */}
 
                  
-                          <MultipleSelectList 
+                          {/* <MultipleSelectList 
                             onSelect={() => alert(selected)}
                             setSelected={(val) => setSelected(val)} 
                             label="Tickets assigned to" 
@@ -165,7 +171,97 @@ const Sparsh = ({ navigation }) => {
                             mode="datetime"
                             onConfirm={handleDateConfirm}
                             onCancel={hideDatePicker}
-                          /></View>
+                          /></View> */}
+                          
+                           
+
+            {/* <TextInput
+              style={styles.textinput}
+              placeholder='search with ticket number here..'
+              keyboardType='numeric'
+              maxLength={10}
+              placeholderTextColor='gray'
+            /> */}
+        {/* <View style={[styles.card, styles.elevation]}>
+          <View>
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={styles.texthead5}>
+                High
+              </Text>
+              <Text style={styles.texthead06}>
+                Created on 4 Apirl 2023
+              </Text>
+            </View>
+            <Text style={styles.heading01}>Testing</Text>
+            <Text style={styles.heading02}>Testing</Text>
+            <Text style={styles.heading03}>Assigned on 10 Apirl 2023</Text>
+            <View style={{ flexDirection: 'row', width: '80%', justifyContent: 'space-around' }}>
+            </View>
+          </View>
+        </View> */}
+
+
+        <View style={styles.tabContainer}>
+        <TouchableOpacity
+          style={[styles.tabItem, activeTab === 'Tab1' && styles.activeTab]}
+          onPress={() => handleTabPress('Tab1')}
+        >
+          <Text style={styles.tabText}>Open Ticket</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.tabItem, activeTab === 'Tab2' && styles.activeTab]}
+          onPress={() => handleTabPress('Tab2')}
+        >
+          <Text style={styles.tabText}>Close Ticket</Text>
+        </TouchableOpacity>
+      </View>
+
+      {activeTab === 'Tab1' && (
+        <View>
+          <Modal animationType="slide" transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+            setModalVisible(!modalVisible);
+          }}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView} >
+              <Pressable style={[styles.button, styles.buttonClose]}
+                onPress={() => setModalVisible(!modalVisible)}>
+                  <Text style={styles.textStyle}>Filter</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+          <Pressable style={[styles.button, styles.buttonOpen]} onPress={() => setModalVisible(true)} >
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Text style={[styles.textStyle, { marginRight: 150 }]}>Ticket Priority</Text>
+                <Icon name='chevron-down' size={15} color='#000' />
+              </View>
+              </Pressable>
+              <MultipleSelectList 
+                onSelect={() => alert(selected)}
+                setSelected={(val) => setSelected(val)} 
+                label="Tickets assigned to" 
+                data={data}  
+                arrowicon={<MaterialIcons name="keyboard-arrow-down" size={24} color="black" />}
+                searchicon={<MaterialIcons name="search" size={24} color="black" />} 
+                search={true} 
+                boxStyles={{borderRadius:0, width: 300, height: 45, borderRadius: 20,paddingHorizontal:20, marginLeft:10}}
+              />
+                          
+              <View><TouchableOpacity style={styles.button3} onPress={showDatePicker}>
+              <Text style={[styles.buttonText3, { marginRight: 100 } ] }>Select Date and Time</Text>
+              <Icon name='chevron-down' size={15} color='#000' />
+              </TouchableOpacity>
+
+              <DateTimePickerModal
+              isVisible={isDatePickerVisible}
+              mode="datetime"
+              onConfirm={handleDateConfirm}
+              onCancel={hideDatePicker}
+              />
+              </View>
                           
                            
 
@@ -176,7 +272,7 @@ const Sparsh = ({ navigation }) => {
               maxLength={10}
               placeholderTextColor='gray'
             />
-        <View style={[styles.card, styles.elevation]}>
+            <View style={[styles.card, styles.elevation]}>
           <View>
             <View style={{ flexDirection: 'row' }}>
               <Text style={styles.texthead5}>
@@ -193,6 +289,13 @@ const Sparsh = ({ navigation }) => {
             </View>
           </View>
         </View>
+        </View>
+      )}
+      {activeTab === 'Tab2' && (
+        <View>
+          <Text style={styles.text}>Content for Tab 2</Text>
+        </View>
+      )}
         
         <Footer />        
       </ScrollView>
@@ -386,6 +489,25 @@ modalView: {
     fontSize: 16,
     fontWeight: '30',
     textAlign: 'center',
+  },
+  tabContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  tabItem: {
+    flex: 1,
+    alignItems: 'center',
+    paddingVertical: 10,
+    backgroundColor: '#808080',
+  },
+  activeTab: {
+    backgroundColor: '#5f9ea0',
+  },
+  tabText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color : 'black',
   },
 });
 

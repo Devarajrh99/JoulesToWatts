@@ -63,13 +63,13 @@ const Otp = ({ navigation }) => {
       </View>
 
 
-      {/* <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Other') }>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Other') }>
         <Text style={styles.buttonText}>Others</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home') }>
         <Text style={styles.buttonText}>Home</Text>
-      </TouchableOpacity> */}
+      </TouchableOpacity>
     </View>
   );
 };

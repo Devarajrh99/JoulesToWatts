@@ -23,6 +23,13 @@ const Job_portal = ({ navigation }) => {
       const handleJobPress = (jobs) => {
         navigation.navigate('JobDetail', { jobs });
       };
+
+      const renderCellContent = (value) => {
+        if (value.length > 10) {
+          return <Text>{value.substring(0, 78)}...</Text>;
+        }
+        return <Text>{value}</Text>;
+      };
     
       const renderJobItem = ({ item }) => (
         <View style={[styles.card, styles.elevation]}>
@@ -39,13 +46,6 @@ const Job_portal = ({ navigation }) => {
         </TouchableOpacity>
         </View>
       );
-
-      const renderCellContent = (value) => {
-        if (value.length > 10) {
-          return <Text>{value.substring(0, 78)}...</Text>;
-        }
-        return <Text>{value}</Text>;
-      };
 
 
    const logout = () =>{
